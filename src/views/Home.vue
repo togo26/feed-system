@@ -32,11 +32,17 @@ export default {
     OrderByControls
   },
   computed: {
-    ...mapState(["lastPage"])
+    ...mapState(["lastPage", "currentPage"])
   },
   methods: {
     ...mapActions(["addFeedListWithAdBanners"]),
-    ...mapMutations(["resetLastPage", "deleteAllLists"]),
+    ...mapMutations([
+      "resetLastPage",
+      "deleteAllLists",
+      "resetOrderBy",
+      "updateCurrentPage",
+      "resetCurrentPage"
+    ]),
     observeScrollEnd(fn) {
       const clientHeight = document.body.clientHeight;
       const windowInnerHeight = window.innerHeight;
@@ -44,18 +50,17 @@ export default {
     },
     addNewFeedList() {
       if (this.lastPage <= this.currentPage) return;
-      this.currentPage++;
-      this.addFeedListWithAdBanners({ page: this.currentPage });
+      this.updateCurrentPage();
+      this.addFeedListWithAdBanners();
     }
   },
   data() {
     return {
-      debouncedObservationScrollEnd: null,
-      currentPage: 1
+      debouncedObservationScrollEnd: null
     };
   },
   beforeMount() {
-    this.addFeedListWithAdBanners({ page: this.currentPage });
+    this.addFeedListWithAdBanners();
   },
   mounted() {
     this.debouncedObservationScrollEnd = debounce(
@@ -65,9 +70,11 @@ export default {
     document.addEventListener("scroll", this.debouncedObservationScrollEnd);
   },
   destroyed() {
-    this.resetLastPage();
-    this.deleteAllLists();
     document.removeEventListener("scroll", this.debouncedObservationScrollEnd);
+    this.deleteAllLists();
+    this.resetLastPage();
+    this.resetCurrentPage();
+    this.resetOrderBy();
   }
 };
 </script>

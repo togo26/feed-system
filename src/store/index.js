@@ -11,7 +11,14 @@ export default new Vuex.Store({
     feedList: [],
     adBannerList: [],
     contentList: [],
-    lastPage: 0
+    lastPage: 0,
+    currentPage: 1,
+    orderBy: "ascending"
+  },
+  getters: {
+    getOrderBy(state) {
+      return state.orderBy;
+    }
   },
   mutations: {
     addFeedList(state, payload) {
@@ -60,10 +67,23 @@ export default new Vuex.Store({
     },
     resetLastPage(state) {
       state.lastPage = 0;
+    },
+    updateOrderBy(state, payload) {
+      state.orderBy = payload.orderBy;
+    },
+    resetOrderBy(state) {
+      state.orderBy = "ascending";
+    },
+    updateCurrentPage(state) {
+      state.currentPage++;
+    },
+    resetCurrentPage(state) {
+      state.currentPage = 1;
     }
   },
   actions: {
-    async addFeedList({ commit }, options) {
+    async addFeedList({ commit, state }) {
+      const options = { orderBy: state.orderBy, page: state.currentPage };
       try {
         const result = await fetchFeedList(options);
         commit("setLastPage", { lastPage: result.last_page });
@@ -73,7 +93,8 @@ export default new Vuex.Store({
         commit("resetLastPage");
       }
     },
-    async addAdBannerList({ commit }, options) {
+    async addAdBannerList({ commit, state }) {
+      const options = { page: state.currentPage };
       try {
         const result = await fetchAdBannerList(options);
         commit("addAdBannerList", { list: result.data });

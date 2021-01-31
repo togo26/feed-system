@@ -25,25 +25,29 @@
 </template>
 
 <script>
-import { mapActions, mapMutations } from "vuex";
+import { mapActions, mapMutations, mapGetters, mapState } from "vuex";
 
 export default {
+  computed: {
+    ...mapState(["currentPage"]),
+    ...mapGetters(["getOrderBy"])
+  },
   methods: {
     ...mapActions(["addFeedListWithAdBanners"]),
-    ...mapMutations(["deleteAllLists", "resetLastPage"]),
+    ...mapMutations([
+      "deleteAllLists",
+      "resetLastPage",
+      "updateOrderBy",
+      "resetCurrentPage"
+    ]),
     handleRadioClick(e) {
-      if (this.currentValue === e.target.value) return;
-      const orderBy = e.target.value === "ascending" ? "asc" : "desc";
-      this.currentValue = e.target.value;
+      if (this.getOrderBy === e.target.value) return;
+      this.updateOrderBy({ orderBy: e.target.value });
       this.deleteAllLists();
+      this.resetCurrentPage();
       this.resetLastPage();
-      this.addFeedListWithAdBanners({ orderBy });
+      this.addFeedListWithAdBanners();
     }
-  },
-  data() {
-    return {
-      currentValue: "ascending"
-    };
   }
 };
 </script>

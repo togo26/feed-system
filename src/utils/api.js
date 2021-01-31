@@ -8,7 +8,8 @@ const requestOptions = {
 export const fetchFeedList = async options => {
   const { page, orderBy } = options;
   const result = await fetch(
-    `${baseUrl}/list?page=${page ? page : 1}&ord=${orderBy || "asc"}
+    `${baseUrl}/list?page=${page}
+    &ord=${orderBy === "ascending" ? "asc" : "desc"}
     &limit=10&category%5B%5D=1`,
     requestOptions
   );
@@ -18,7 +19,7 @@ export const fetchFeedList = async options => {
 export const fetchAdBannerList = async options => {
   const { page } = options;
   const result = await fetch(
-    `${baseUrl}/ads?page=${page ? page : 1}&limit=4`,
+    `${baseUrl}/ads?page=${page}&limit=4`,
     requestOptions
   );
   return result.json();

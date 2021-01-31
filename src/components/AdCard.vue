@@ -58,6 +58,7 @@ export default {
 
     h3 {
       width: 28vw;
+      max-width: 550px;
       margin-bottom: 20px;
       font-size: 18px;
       line-height: 24px;
@@ -72,6 +73,7 @@ export default {
 
     p {
       width: 28vw;
+      max-width: 550px;
       line-height: 24px;
       overflow: hidden;
       text-overflow: ellipsis;

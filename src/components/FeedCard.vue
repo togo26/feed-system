@@ -58,6 +58,7 @@ a {
 }
 h3 {
   width: 42vw;
+  max-width: 700px;
   height: 28px;
   margin-bottom: 10px;
   font-size: 18px;
@@ -69,6 +70,7 @@ h3 {
 
 p {
   width: 42vw;
+  max-width: 700px;
   height: 25px;
   overflow: hidden;
   text-overflow: ellipsis;

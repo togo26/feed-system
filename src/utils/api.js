@@ -1,19 +1,24 @@
 const baseUrl = "https://problem.comento.kr/api";
-const options = {
+const requestOptions = {
   headers: {
     Accept: "application/json"
   }
 };
 
-export const fetchFeedList = async () => {
+export const fetchFeedList = async options => {
+  const { page } = options;
   const result = await fetch(
-    `${baseUrl}/list?page=1&ord=asc&limit=10&category%5B%5D=1`,
-    options
+    `${baseUrl}/list?page=${page}&ord=asc&limit=10&category%5B%5D=1`,
+    requestOptions
   );
   return result.json();
 };
 
-export const fetchAdBannerList = async () => {
-  const result = await fetch(`${baseUrl}/ads?page=1&limit=4`, options);
+export const fetchAdBannerList = async options => {
+  const { page } = options;
+  const result = await fetch(
+    `${baseUrl}/ads?page=${page}&limit=4`,
+    requestOptions
+  );
   return result.json();
 };

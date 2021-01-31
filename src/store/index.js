@@ -10,7 +10,8 @@ export default new Vuex.Store({
   state: {
     feedList: [],
     adBannerList: [],
-    contentList: []
+    contentList: [],
+    lastPage: 0
   },
   mutations: {
     addFeedList(state, payload) {
@@ -48,29 +49,42 @@ export default new Vuex.Store({
       }
 
       state.contentList = combinedList.flat();
+    },
+    deleteAllLists(state) {
+      state.feedList = [];
+      state.adBannerList = [];
+      state.contentList = [];
+    },
+    setLastPage(state, payload) {
+      state.lastPage = payload.lastPage;
+    },
+    resetLastPage(state) {
+      state.lastPage = 0;
     }
   },
   actions: {
-    async addFeedList({ commit }) {
+    async addFeedList({ commit }, options) {
       try {
-        const result = await fetchFeedList();
+        const result = await fetchFeedList(options);
+        commit("setLastPage", { lastPage: result.last_page });
         commit("addFeedList", { list: result.data });
       } catch (error) {
         console.error(error);
+        commit("resetLastPage");
       }
     },
-    async addAdBannerList({ commit }) {
+    async addAdBannerList({ commit }, options) {
       try {
-        const result = await fetchAdBannerList();
+        const result = await fetchAdBannerList(options);
         commit("addAdBannerList", { list: result.data });
       } catch (error) {
         console.error(error);
       }
     },
-    async addFeedListWithAdBanners({ commit }) {
+    async addFeedListWithAdBanners({ commit, dispatch }, options) {
       try {
-        await this.dispatch("addFeedList");
-        await this.dispatch("addAdBannerList");
+        await dispatch("addFeedList", options);
+        await dispatch("addAdBannerList", options);
         commit("addFeedListWithAdBanners");
       } catch (error) {
         console.log(error);

@@ -16,11 +16,12 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { mapActions, mapState, mapMutations } from "vuex";
 import Button from "@/components/Button.vue";
 import OrderByControls from "@/components/OrderByControls.vue";
 import FilterButton from "@/components/FilterButton.vue";
 import FeedList from "@/components/FeedList.vue";
+import { debounce } from "@/utils/debounce.js";
 
 export default {
   name: "Home",
@@ -30,11 +31,43 @@ export default {
     FeedList,
     OrderByControls
   },
-  methods: {
-    ...mapActions(["addFeedListWithAdBanners"])
+  computed: {
+    ...mapState(["lastPage"])
   },
-  async beforeMount() {
-    await this.addFeedListWithAdBanners();
+  methods: {
+    ...mapActions(["addFeedListWithAdBanners"]),
+    ...mapMutations(["resetLastPage", "deleteAllLists"]),
+    observeScrollEnd(fn) {
+      const clientHeight = document.body.clientHeight;
+      const windowInnerHeight = window.innerHeight;
+      if (window.scrollY + 1 >= clientHeight - windowInnerHeight) fn();
+    },
+    addNewFeedList() {
+      if (this.lastPage <= this.currentPage) return;
+      this.currentPage++;
+      this.addFeedListWithAdBanners({ page: this.currentPage });
+    }
+  },
+  data() {
+    return {
+      debouncedObservationScrollEnd: null,
+      currentPage: 1
+    };
+  },
+  beforeMount() {
+    this.addFeedListWithAdBanners({ page: this.currentPage });
+  },
+  mounted() {
+    this.debouncedObservationScrollEnd = debounce(
+      () => this.observeScrollEnd(this.addNewFeedList),
+      600
+    );
+    document.addEventListener("scroll", this.debouncedObservationScrollEnd);
+  },
+  destroyed() {
+    this.resetLastPage();
+    this.deleteAllLists();
+    document.removeEventListener("scroll", this.debouncedObservationScrollEnd);
   }
 };
 </script>

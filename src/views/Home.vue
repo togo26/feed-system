@@ -31,10 +31,10 @@ export default {
     OrderByControls
   },
   methods: {
-    ...mapActions(["addFeedList"])
+    ...mapActions(["addFeedListWithAdBanners"])
   },
   async beforeMount() {
-    await this.addFeedList();
+    await this.addFeedListWithAdBanners();
   }
 };
 </script>

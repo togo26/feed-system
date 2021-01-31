@@ -19,6 +19,7 @@ header {
 .wrapper {
   display: flex;
   align-items: center;
-  width: 66%;
+  width: 80%;
+  max-width: 1140px;
 }
 </style>

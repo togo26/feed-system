@@ -1,6 +1,6 @@
 <template>
-  <router-link :to="'/' + feed.id">
-    <article>
+  <router-link :to="'/' + feed.id" v-if="feed">
+    <div class="wrapper">
       <div class="id-info">
         <span>{{ feed.category_id }}</span>
         <span>{{ feed.id }}</span>
@@ -11,7 +11,7 @@
       </div>
       <h3>{{ feed.title }}</h3>
       <p>{{ feed.contents }}</p>
-    </article>
+    </div>
   </router-link>
 </template>
 
@@ -27,7 +27,7 @@ a {
   text-decoration: none;
 }
 
-article {
+.wrapper {
   box-sizing: border-box;
   width: 100%;
   height: 180px;
@@ -58,7 +58,6 @@ article {
 }
 h3 {
   width: 42vw;
-  /* width: 50%; */
   height: 28px;
   margin-bottom: 10px;
   font-size: 18px;

@@ -1,18 +1,24 @@
 <template>
   <div>
-    <feed-card :key="i" :feed="item" v-for="(item, i) in feedList" />
+    <card
+      :key="i"
+      :content="item"
+      :index="i"
+      v-for="(item, i) in contentList"
+    />
   </div>
 </template>
 
 <script>
 import { mapState } from "vuex";
-import FeedCard from "@/components/FeedCard.vue";
+import Card from "@/components/Card.vue";
+
 export default {
   components: {
-    FeedCard
+    Card
   },
   computed: {
-    ...mapState(["feedList"])
+    ...mapState(["contentList"])
   }
 };
 </script>

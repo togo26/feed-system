@@ -1,5 +1,8 @@
 <template>
   <div class="home">
+    <modal-view v-if="isModalOpened" @close-modal="isModalOpened = false">
+      <category-filter :close-modal="() => (isModalOpened = false)" />
+    </modal-view>
     <div class="wrapper">
       <aside>
         <Button text="로그인" />
@@ -7,7 +10,7 @@
       <section>
         <div class="sorting-controls">
           <order-by-controls />
-          <filter-button text="필터" />
+          <filter-button text="필터" @handle-click="isModalOpened = true" />
         </div>
         <feed-list />
       </section>
@@ -21,6 +24,8 @@ import Button from "@/components/Button.vue";
 import OrderByControls from "@/components/OrderByControls.vue";
 import FilterButton from "@/components/FilterButton.vue";
 import FeedList from "@/components/FeedList.vue";
+import ModalView from "@/components/ModalView.vue";
+import CategoryFilter from "@/components/CategoryFilter.vue";
 import { debounce } from "@/utils/debounce.js";
 
 export default {
@@ -29,13 +34,15 @@ export default {
     Button,
     FilterButton,
     FeedList,
-    OrderByControls
+    OrderByControls,
+    ModalView,
+    CategoryFilter
   },
   computed: {
-    ...mapState(["lastPage", "currentPage"])
+    ...mapState(["lastPage", "currentPage", "categories"])
   },
   methods: {
-    ...mapActions(["addFeedListWithAdBanners"]),
+    ...mapActions(["addFeedListWithAdBanners", "addCategories"]),
     ...mapMutations([
       "resetLastPage",
       "deleteAllLists",
@@ -56,11 +63,13 @@ export default {
   },
   data() {
     return {
-      debouncedObservationScrollEnd: null
+      debouncedObservationScrollEnd: null,
+      isModalOpened: false
     };
   },
-  beforeMount() {
-    this.addFeedListWithAdBanners();
+  async beforeMount() {
+    if (!this.categories.length) await this.addCategories();
+    await this.addFeedListWithAdBanners();
   },
   mounted() {
     this.debouncedObservationScrollEnd = debounce(

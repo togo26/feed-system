@@ -26,7 +26,7 @@
 
 .modal-card {
   box-sizing: border-box;
-  width: 460px;
+  width: 100%;
   max-width: 460px;
   height: 268px;
   margin: auto;

@@ -43,13 +43,7 @@ export default {
   },
   methods: {
     ...mapActions(["addFeedListWithAdBanners", "addCategories"]),
-    ...mapMutations([
-      "resetLastPage",
-      "deleteAllLists",
-      "resetOrderBy",
-      "updateCurrentPage",
-      "resetCurrentPage"
-    ]),
+    ...mapMutations(["deleteAllList", "resetOrderBy", "updateCurrentPage"]),
     observeScrollEnd(fn) {
       const clientHeight = document.body.clientHeight;
       const windowInnerHeight = window.innerHeight;
@@ -80,9 +74,7 @@ export default {
   },
   destroyed() {
     document.removeEventListener("scroll", this.debouncedObservationScrollEnd);
-    this.deleteAllLists();
-    this.resetLastPage();
-    this.resetCurrentPage();
+    this.deleteAllList();
     this.resetOrderBy();
   }
 };

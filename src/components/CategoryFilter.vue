@@ -27,12 +27,7 @@ export default {
     ...mapState(["categories"])
   },
   methods: {
-    ...mapMutations([
-      "updateCategories",
-      "resetLastPage",
-      "deleteAllLists",
-      "resetCurrentPage"
-    ]),
+    ...mapMutations(["updateCategories", "deleteAllList"]),
     ...mapActions(["addFeedListWithAdBanners"]),
     handleCheckBoxClick(checkbox) {
       const newCategories = this.currentCheckList.map(category => {
@@ -50,9 +45,7 @@ export default {
       if (!isChanged) return this.closeModal();
       this.updateCategories({ list: this.currentCheckList });
       this.closeModal();
-      this.deleteAllLists();
-      this.resetLastPage();
-      this.resetCurrentPage();
+      this.deleteAllList();
       this.addFeedListWithAdBanners();
     }
   },

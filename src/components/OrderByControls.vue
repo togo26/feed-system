@@ -33,18 +33,11 @@ export default {
   },
   methods: {
     ...mapActions(["addFeedListWithAdBanners"]),
-    ...mapMutations([
-      "deleteAllLists",
-      "resetLastPage",
-      "updateOrderBy",
-      "resetCurrentPage"
-    ]),
+    ...mapMutations(["deleteAllList", "updateOrderBy"]),
     handleRadioClick(e) {
       if (this.orderBy === e.target.value) return;
       this.updateOrderBy({ orderBy: e.target.value });
-      this.deleteAllLists();
-      this.resetCurrentPage();
-      this.resetLastPage();
+      this.deleteAllList();
       this.addFeedListWithAdBanners();
     }
   }

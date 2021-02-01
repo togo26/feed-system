@@ -62,28 +62,24 @@ export default new Vuex.Store({
 
       state.contentList = combinedList.flat();
     },
-    deleteAllLists(state) {
+    deleteAllList(state) {
       state.feedList = [];
       state.adBannerList = [];
       state.contentList = [];
+      state.lastPage = 0;
+      state.currentPage = 1;
     },
     setLastPage(state, payload) {
       state.lastPage = payload.lastPage;
     },
-    resetLastPage(state) {
-      state.lastPage = 0;
+    updateCurrentPage(state) {
+      state.currentPage++;
     },
     updateOrderBy(state, payload) {
       state.orderBy = payload.orderBy;
     },
     resetOrderBy(state) {
       state.orderBy = "ascending";
-    },
-    updateCurrentPage(state) {
-      state.currentPage++;
-    },
-    resetCurrentPage(state) {
-      state.currentPage = 1;
     },
     addCategories(state, payload) {
       state.categories = payload.list.map(category => ({

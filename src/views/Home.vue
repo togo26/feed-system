@@ -39,17 +39,11 @@ export default {
     CategoryFilter
   },
   computed: {
-    ...mapState(["lastPage", "currentPage", "categories"])
+    ...mapState(["lastPage", "currentPage", "categories", "contentList"])
   },
   methods: {
     ...mapActions(["addFeedListWithAdBanners", "addCategories"]),
-    ...mapMutations([
-      "resetLastPage",
-      "deleteAllLists",
-      "resetOrderBy",
-      "updateCurrentPage",
-      "resetCurrentPage"
-    ]),
+    ...mapMutations(["deleteAllList", "resetOrderBy", "updateCurrentPage"]),
     observeScrollEnd(fn) {
       const clientHeight = document.body.clientHeight;
       const windowInnerHeight = window.innerHeight;
@@ -69,7 +63,7 @@ export default {
   },
   async beforeMount() {
     if (!this.categories.length) await this.addCategories();
-    await this.addFeedListWithAdBanners();
+    if (!this.contentList.length) await this.addFeedListWithAdBanners();
   },
   mounted() {
     this.debouncedObservationScrollEnd = debounce(
@@ -80,10 +74,6 @@ export default {
   },
   destroyed() {
     document.removeEventListener("scroll", this.debouncedObservationScrollEnd);
-    this.deleteAllLists();
-    this.resetLastPage();
-    this.resetCurrentPage();
-    this.resetOrderBy();
   }
 };
 </script>

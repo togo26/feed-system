@@ -7,7 +7,7 @@
         value="ascending"
         name="order-by"
         @click="handleRadioClick"
-        checked
+        :checked="orderBy === 'ascending'"
       />
       <label for="ascending">오름차순</label>
     </div>
@@ -18,6 +18,7 @@
         value="descending"
         name="order-by"
         @click="handleRadioClick"
+        :checked="orderBy === 'descending'"
       />
       <label for="descending">내림차순</label>
     </div>
@@ -25,27 +26,19 @@
 </template>
 
 <script>
-import { mapActions, mapMutations, mapGetters, mapState } from "vuex";
+import { mapActions, mapMutations, mapState } from "vuex";
 
 export default {
   computed: {
-    ...mapState(["currentPage"]),
-    ...mapGetters(["getOrderBy"])
+    ...mapState(["currentPage", "orderBy"])
   },
   methods: {
     ...mapActions(["addFeedListWithAdBanners"]),
-    ...mapMutations([
-      "deleteAllLists",
-      "resetLastPage",
-      "updateOrderBy",
-      "resetCurrentPage"
-    ]),
+    ...mapMutations(["deleteAllList", "updateOrderBy"]),
     handleRadioClick(e) {
-      if (this.getOrderBy === e.target.value) return;
+      if (this.orderBy === e.target.value) return;
       this.updateOrderBy({ orderBy: e.target.value });
-      this.deleteAllLists();
-      this.resetCurrentPage();
-      this.resetLastPage();
+      this.deleteAllList();
       this.addFeedListWithAdBanners();
     }
   }

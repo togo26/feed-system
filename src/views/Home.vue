@@ -39,7 +39,7 @@ export default {
     CategoryFilter
   },
   computed: {
-    ...mapState(["lastPage", "currentPage", "categories"])
+    ...mapState(["lastPage", "currentPage", "categories", "contentList"])
   },
   methods: {
     ...mapActions(["addFeedListWithAdBanners", "addCategories"]),
@@ -63,7 +63,7 @@ export default {
   },
   async beforeMount() {
     if (!this.categories.length) await this.addCategories();
-    await this.addFeedListWithAdBanners();
+    if (!this.contentList.length) await this.addFeedListWithAdBanners();
   },
   mounted() {
     this.debouncedObservationScrollEnd = debounce(
@@ -74,8 +74,6 @@ export default {
   },
   destroyed() {
     document.removeEventListener("scroll", this.debouncedObservationScrollEnd);
-    this.deleteAllList();
-    this.resetOrderBy();
   }
 };
 </script>

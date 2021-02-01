@@ -33,3 +33,8 @@ export const fetchCategories = async () => {
   const result = await fetch(`${baseUrl}/category`, requestOptions);
   return result.json();
 };
+
+export const fetchFeedDetail = async id => {
+  const result = await fetch(`${baseUrl}/view?id=${id}`);
+  return result.json();
+};

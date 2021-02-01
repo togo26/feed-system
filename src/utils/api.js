@@ -6,11 +6,15 @@ const requestOptions = {
 };
 
 export const fetchFeedList = async options => {
-  const { page, orderBy } = options;
+  const { page, orderBy, categories } = options;
+  const selectedCategories = categories.map(category => {
+    if (category.isChecked) return `&category%5B%5D=${category.id}`;
+    else return "";
+  });
   const result = await fetch(
     `${baseUrl}/list?page=${page}
     &ord=${orderBy === "ascending" ? "asc" : "desc"}
-    &limit=10&category%5B%5D=1`,
+    &limit=10${selectedCategories.join("")}`,
     requestOptions
   );
   return result.json();
@@ -22,5 +26,10 @@ export const fetchAdBannerList = async options => {
     `${baseUrl}/ads?page=${page}&limit=4`,
     requestOptions
   );
+  return result.json();
+};
+
+export const fetchCategories = async () => {
+  const result = await fetch(`${baseUrl}/category`, requestOptions);
   return result.json();
 };

@@ -7,7 +7,7 @@
       </div>
       <div class="user-info">
         <span>{{ feed.user_id }}</span>
-        <span>{{ feed.created_at }}</span>
+        <span>{{ sliceTimeString(feed.created_at) }}</span>
       </div>
       <h3>{{ feed.title }}</h3>
       <p>{{ feed.contents }}</p>
@@ -16,8 +16,14 @@
 </template>
 
 <script>
+import { sliceTimeString } from "@/utils/sliceTimeString.js";
 export default {
-  props: ["feed"]
+  props: ["feed"],
+  data() {
+    return {
+      sliceTimeString
+    };
+  }
 };
 </script>
 

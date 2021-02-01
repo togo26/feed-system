@@ -7,7 +7,7 @@
         value="ascending"
         name="order-by"
         @click="handleRadioClick"
-        checked
+        :checked="orderBy === 'ascending'"
       />
       <label for="ascending">오름차순</label>
     </div>
@@ -18,6 +18,7 @@
         value="descending"
         name="order-by"
         @click="handleRadioClick"
+        :checked="orderBy === 'descending'"
       />
       <label for="descending">내림차순</label>
     </div>

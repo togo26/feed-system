@@ -28,11 +28,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-a {
-  color: black;
-  text-decoration: none;
-}
-
 .wrapper {
   box-sizing: border-box;
   width: 100%;
@@ -63,7 +58,7 @@ a {
   }
 }
 h3 {
-  width: 42vw;
+  width: 44vw;
   max-width: 700px;
   height: 28px;
   margin-bottom: 10px;
@@ -75,12 +70,30 @@ h3 {
 }
 
 p {
-  width: 42vw;
+  width: 44vw;
   max-width: 700px;
   height: 25px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
   color: #495057;
+}
+
+@media (max-width: 768px) {
+  .wrapper {
+    padding: 0 15px;
+    border: none;
+    border-radius: 0px;
+    box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.1);
+    margin-bottom: 10px;
+  }
+
+  h3 {
+    width: 96%;
+  }
+
+  p {
+    width: 96%;
+  }
 }
 </style>

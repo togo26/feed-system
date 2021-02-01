@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="category-filter-controls">
     <h3>필터</h3>
     <div class="checkbox-controls">
       <check-box
@@ -68,15 +68,36 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.category-filter-controls {
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+}
+
 .checkbox-controls {
   display: flex;
   flex-direction: column;
+  height: 120px;
 }
 
 button {
+  align-self: flex-end;
   width: 100px;
   height: 40px;
   font-size: 16px;
   font-weight: 400;
+}
+
+h3 {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+@media (max-width: 768px) {
+  button {
+    align-self: flex-start;
+    width: 100%;
+  }
 }
 </style>

@@ -43,21 +43,20 @@ export default {
   display: flex;
 
   & img {
-    width: 100%;
-    max-width: 310px;
-    height: 21vh;
-    max-height: 180px;
+    width: 310px;
+    height: 180px;
     margin-right: 30px;
     object-fit: cover;
+    background-color: #e1e4e7;
   }
 
   & .ad-contents__text-box {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    width: 50%;
 
     h3 {
-      width: 28vw;
       max-width: 550px;
       margin-bottom: 20px;
       font-size: 18px;
@@ -72,7 +71,6 @@ export default {
     }
 
     p {
-      width: 28vw;
       max-width: 550px;
       line-height: 24px;
       overflow: hidden;
@@ -81,6 +79,43 @@ export default {
       display: -webkit-box;
       -webkit-line-clamp: 4;
       -webkit-box-orient: vertical;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .wrapper {
+    box-sizing: border-box;
+    width: 100%;
+    height: 381px;
+    border: none;
+    border-radius: 0px;
+    box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.1);
+    padding: 4px 15px;
+    margin-bottom: 10px;
+  }
+
+  .ad-contents {
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+
+    & img {
+      width: 100%;
+      margin: 0;
+      margin-bottom: 14px;
+    }
+
+    & .ad-contents__text-box {
+      width: 100%;
+
+      h3 {
+        width: 96%;
+      }
+      p {
+        width: 96%;
+        -webkit-line-clamp: 2;
+      }
     }
   }
 }

@@ -1,7 +1,11 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import createLogger from "vuex/dist/logger";
-import { fetchFeedList, fetchAdBannerList } from "../utils/api.js";
+import {
+  fetchFeedList,
+  fetchAdBannerList,
+  fetchCategories
+} from "../utils/api.js";
 
 Vue.use(Vuex);
 
@@ -11,6 +15,7 @@ export default new Vuex.Store({
     feedList: [],
     adBannerList: [],
     contentList: [],
+    categories: [],
     lastPage: 0,
     currentPage: 1,
     orderBy: "ascending"
@@ -22,7 +27,12 @@ export default new Vuex.Store({
   },
   mutations: {
     addFeedList(state, payload) {
-      state.feedList = [...state.feedList, ...payload.list];
+      const mapCategoryNameToList = payload.list.map(feed => ({
+        ...feed,
+        category_id:
+          state.categories[feed.category_id - 1]?.name || feed.category_id
+      }));
+      state.feedList = [...state.feedList, ...mapCategoryNameToList];
     },
     addAdBannerList(state, payload) {
       state.adBannerList = [...state.adBannerList, ...payload.list];
@@ -79,15 +89,28 @@ export default new Vuex.Store({
     },
     resetCurrentPage(state) {
       state.currentPage = 1;
+    },
+    addCategories(state, payload) {
+      state.categories = payload.list.map(category => ({
+        ...category,
+        isChecked: true
+      }));
+    },
+    updateCategories(state, payload) {
+      state.categories = payload.list;
     }
   },
   actions: {
     async addFeedList({ commit, state }) {
-      const options = { orderBy: state.orderBy, page: state.currentPage };
+      const options = {
+        orderBy: state.orderBy,
+        page: state.currentPage,
+        categories: state.categories
+      };
       try {
         const result = await fetchFeedList(options);
         commit("setLastPage", { lastPage: result.last_page });
-        commit("addFeedList", { list: result.data });
+        commit("addFeedList", { list: result.data || [] });
       } catch (error) {
         console.error(error);
         commit("resetLastPage");
@@ -97,18 +120,26 @@ export default new Vuex.Store({
       const options = { page: state.currentPage };
       try {
         const result = await fetchAdBannerList(options);
-        commit("addAdBannerList", { list: result.data });
+        commit("addAdBannerList", { list: result.data || [] });
       } catch (error) {
         console.error(error);
       }
     },
-    async addFeedListWithAdBanners({ commit, dispatch }, options) {
+    async addFeedListWithAdBanners({ commit, dispatch }) {
       try {
-        await dispatch("addFeedList", options);
-        await dispatch("addAdBannerList", options);
+        await dispatch("addFeedList");
+        await dispatch("addAdBannerList");
         commit("addFeedListWithAdBanners");
       } catch (error) {
-        console.log(error);
+        console.error(error);
+      }
+    },
+    async addCategories({ commit }) {
+      try {
+        const result = await fetchCategories();
+        commit("addCategories", { list: result.category });
+      } catch (error) {
+        console.error(error);
       }
     }
   },

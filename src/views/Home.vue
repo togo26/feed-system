@@ -74,7 +74,7 @@ export default {
   mounted() {
     this.debouncedObservationScrollEnd = debounce(
       () => this.observeScrollEnd(this.addNewFeedList),
-      600
+      300
     );
     document.addEventListener("scroll", this.debouncedObservationScrollEnd);
   },
@@ -92,7 +92,7 @@ export default {
 .home {
   display: flex;
   justify-content: center;
-  margin-top: 50px;
+  margin-top: 120px;
 }
 
 .wrapper {
@@ -114,8 +114,39 @@ section {
 .sorting-controls {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   width: 100%;
   height: 24px;
   margin-bottom: 11px;
+}
+
+@media (max-width: 924px) {
+  aside {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .home {
+    margin: 0;
+    margin-top: 70px;
+  }
+
+  .wrapper {
+    width: 100%;
+  }
+
+  section {
+    width: 100%;
+  }
+
+  .sorting-controls {
+    box-sizing: border-box;
+    width: 100%;
+    height: 56px;
+    margin: 0;
+    padding: 10px 15px 10px 15px;
+    border-bottom: 1px solid #e1e4e7;
+  }
 }
 </style>

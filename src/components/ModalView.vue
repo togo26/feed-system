@@ -16,7 +16,7 @@
   position: fixed;
   left: 0;
   top: 0;
-  z-index: 5;
+  z-index: 25;
 }
 
 .overlay {
@@ -34,7 +34,7 @@
   position: relative;
   top: calc(50% - 300px / 2);
   background-color: #fff;
-  z-index: 10;
+  z-index: 50;
   opacity: 1;
 }
 
@@ -62,6 +62,12 @@
   }
   &:after {
     transform: rotate(-45deg);
+  }
+}
+
+@media (max-width: 768px) {
+  .modal-card {
+    max-width: 337px;
   }
 }
 </style>

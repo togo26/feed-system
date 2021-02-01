@@ -41,10 +41,11 @@ export default {
 .feed-detail {
   display: flex;
   justify-content: center;
-  margin-top: 50px;
+  margin-top: 120px;
 }
 
 .container {
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
   width: 80%;
@@ -61,6 +62,17 @@ export default {
 
   & p:last-child {
     color: #00c854;
+  }
+}
+
+@media (max-width: 768px) {
+  .feed-detail {
+    margin-top: 90px;
+  }
+
+  .container {
+    width: 100%;
+    padding: 0 15px;
   }
 }
 </style>

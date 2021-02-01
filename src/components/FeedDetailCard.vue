@@ -64,4 +64,14 @@ p {
   font-size: 13px;
   color: #adb5bd;
 }
+
+@media (max-width: 768px) {
+  .wrapper {
+    border: none;
+    border-radius: 0;
+    padding: 25px 0;
+    border-top: 1px solid #00c854;
+    border-bottom: 1px solid #00c854;
+  }
+}
 </style>

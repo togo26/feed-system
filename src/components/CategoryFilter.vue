@@ -93,4 +93,11 @@ h3 {
   font-weight: 700;
   margin-bottom: 20px;
 }
+
+@media (max-width: 768px) {
+  button {
+    align-self: flex-start;
+    width: 100%;
+  }
+}
 </style>

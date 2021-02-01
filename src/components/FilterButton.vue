@@ -22,6 +22,7 @@ button {
   background-color: #ffffff;
   font-size: 13px;
   text-align: center;
+  color: #adb5bd;
 
   &:active {
     background-color: #eeeeee;

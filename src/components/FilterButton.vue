@@ -1,5 +1,5 @@
 <template>
-  <button @click="handleClick">{{ text }}</button>
+  <button @click="$emit('handle-click')">{{ text }}</button>
 </template>
 
 <script>
@@ -7,11 +7,6 @@ export default {
   name: "FilterButton",
   props: {
     text: String
-  },
-  methods: {
-    handleClick() {
-      console.log("clicked");
-    }
   }
 };
 </script>

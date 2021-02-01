@@ -20,11 +20,6 @@ export default new Vuex.Store({
     currentPage: 1,
     orderBy: "ascending"
   },
-  getters: {
-    getOrderBy(state) {
-      return state.orderBy;
-    }
-  },
   mutations: {
     addFeedList(state, payload) {
       const mapCategoryNameToList = payload.list.map(feed => ({

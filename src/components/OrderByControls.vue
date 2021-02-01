@@ -25,12 +25,11 @@
 </template>
 
 <script>
-import { mapActions, mapMutations, mapGetters, mapState } from "vuex";
+import { mapActions, mapMutations, mapState } from "vuex";
 
 export default {
   computed: {
-    ...mapState(["currentPage"]),
-    ...mapGetters(["getOrderBy"])
+    ...mapState(["currentPage", "orderBy"])
   },
   methods: {
     ...mapActions(["addFeedListWithAdBanners"]),
@@ -41,7 +40,7 @@ export default {
       "resetCurrentPage"
     ]),
     handleRadioClick(e) {
-      if (this.getOrderBy === e.target.value) return;
+      if (this.orderBy === e.target.value) return;
       this.updateOrderBy({ orderBy: e.target.value });
       this.deleteAllLists();
       this.resetCurrentPage();

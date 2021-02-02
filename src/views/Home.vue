@@ -68,6 +68,7 @@ import Tag from "@/components/Tag.vue";
 import Loading from "@/components/Loading.vue";
 import { fetchFeedList } from "@/utils/api.js";
 import { debounce } from "@/utils/debounce.js";
+import { observeScrollEnd } from "@/utils/observeScrollEnd.js";
 import { checkInternetExplores } from "@/utils/checkInternetExplores.js";
 
 export default {
@@ -110,11 +111,6 @@ export default {
       "resetOrderBy",
       "increaseCurrentPageNumber"
     ]),
-    observeScrollEnd(fn) {
-      const clientHeight = document.body.clientHeight;
-      const windowInnerHeight = window.innerHeight;
-      if (window.scrollY + 1 >= clientHeight - windowInnerHeight) fn();
-    },
     addNewFeedList() {
       if (this.lastPageNumber <= this.currentPageNumber) return;
       this.increaseCurrentPageNumber();
@@ -172,7 +168,7 @@ export default {
   },
   mounted() {
     this.debouncedObservationScrollEnd = debounce(
-      () => this.observeScrollEnd(this.addNewFeedList),
+      () => observeScrollEnd(this.addNewFeedList),
       300
     );
     document.addEventListener("scroll", this.debouncedObservationScrollEnd);

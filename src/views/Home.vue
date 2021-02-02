@@ -32,7 +32,7 @@
             v-for="(item, i) in getSelectedCategories"
           />
         </div>
-        <card-list
+        <feed-with-ad-card-list
           :list="contentList"
           :maxFeedLength="isAdReductionMode ? '6' : '4'"
           v-if="!search && contentList.length"
@@ -60,7 +60,7 @@ import { mapActions, mapState, mapMutations } from "vuex";
 import Button from "@/components/Button/Button.vue";
 import FilterButton from "@/components/Button/FilterButton.vue";
 import OrderByControls from "@/components/OrderByControls.vue";
-import CardList from "@/components/CardList.vue";
+import FeedWithAdCardList from "@/components/FeedWithAdCardList.vue";
 import FeedCard from "@/components/Card/FeedCard.vue";
 import ModalView from "@/components/ModalView.vue";
 import CategoryFilter from "@/components/CategoryFilter.vue";
@@ -75,7 +75,7 @@ export default {
   components: {
     Button,
     FilterButton,
-    CardList,
+    FeedWithAdCardList,
     FeedCard,
     OrderByControls,
     ModalView,

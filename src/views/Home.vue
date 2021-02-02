@@ -1,5 +1,5 @@
 <template>
-  <div class="home">
+  <div class="home" v-if="!isIE">
     <modal-view v-if="isModalOpened" @close-modal="isModalOpened = false">
       <category-filter :close-modal="() => (isModalOpened = false)" />
     </modal-view>
@@ -24,6 +24,9 @@
       </section>
     </div>
   </div>
+  <div class="home" v-else>
+    <p>최신 브라우저를 이용해주세요.</p>
+  </div>
 </template>
 
 <script>
@@ -37,6 +40,7 @@ import CategoryFilter from "@/components/CategoryFilter.vue";
 import Tag from "@/components/Tag.vue";
 import Loading from "@/components/Loading.vue";
 import { debounce } from "@/utils/debounce.js";
+import { checkInternetExplores } from "@/utils/checkInternetExplores.js";
 
 export default {
   name: "Home",
@@ -73,10 +77,13 @@ export default {
   data() {
     return {
       debouncedObservationScrollEnd: null,
-      isModalOpened: false
+      isModalOpened: false,
+      isIE: false
     };
   },
   async beforeMount() {
+    this.isIE = checkInternetExplores();
+    if (this.isIE) return;
     if (!this.categories.length) await this.addCategories();
     if (!this.contentList.length) await this.addFeedListWithAdBanners();
   },

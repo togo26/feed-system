@@ -2,11 +2,20 @@
   <div class="modal">
     <div class="overlay" />
     <div class="modal-card">
-      <div class="close-button" @click="$emit('close-modal')"></div>
+      <close-button @close="$emit('close-modal')" />
       <slot />
     </div>
   </div>
 </template>
+
+<script>
+import CloseButton from "@/components/Button/CloseButton.vue";
+export default {
+  components: {
+    CloseButton
+  }
+};
+</script>
 
 <style lang="scss" scoped>
 .modal,
@@ -36,33 +45,6 @@
   background-color: #fff;
   z-index: 50;
   opacity: 1;
-}
-
-.close-button {
-  cursor: pointer;
-  position: absolute;
-  right: 20px;
-  width: 30px;
-  height: 30px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  &:before,
-  &:after {
-    position: absolute;
-    content: "";
-    height: 22px;
-    width: 3px;
-    background-color: #adb5bd;
-  }
-
-  &:before {
-    transform: rotate(45deg);
-  }
-  &:after {
-    transform: rotate(-45deg);
-  }
 }
 
 @media (max-width: 768px) {

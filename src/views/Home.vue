@@ -70,9 +70,9 @@ import { fetchFeedList } from "@/utils/api.js";
 import { debounce } from "@/utils/debounce.js";
 import { observeScrollEnd } from "@/utils/observeScrollEnd.js";
 import { checkInternetExplores } from "@/utils/checkInternetExplores.js";
+import { state, mutation, action } from "@/constants/index.js";
 
 export default {
-  name: "Home",
   components: {
     Button,
     FilterButton,
@@ -84,32 +84,35 @@ export default {
     Tag,
     Loading
   },
-  computed: {
-    ...mapState([
-      "lastPageNumber",
-      "currentPageNumber",
-      "categories",
-      "orderBy",
-      "contentList",
-      "feedList",
-      "isAdReductionMode"
-    ]),
-    getSelectedCategories() {
-      return this.categories.filter(category => category.isChecked);
-    }
-  },
   watch: {
     search: async function(keyword) {
       this.isSearching = true;
       if (keyword === "") return this.resetSearch();
     }
   },
+  computed: {
+    ...mapState([
+      state.LAST_PAGE_NUMBER,
+      state.CURRENT_PAGE_NUMBER,
+      state.CATEGORIES,
+      state.ORDER_BY,
+      state.CONTENT_LIST,
+      state.FEED_LIST,
+      state.IS_AD_REDUCTION_MODE
+    ]),
+    getSelectedCategories() {
+      return this.categories.filter(category => category.isChecked);
+    }
+  },
   methods: {
-    ...mapActions(["addFeedListWithAdBanners", "addCategories"]),
+    ...mapActions([
+      action.ADD_FEED_LIST_WITH_AD_BANNERS,
+      action.ADD_CATEGORIES
+    ]),
     ...mapMutations([
-      "deleteAllList",
-      "resetOrderBy",
-      "increaseCurrentPageNumber"
+      mutation.DELETE_ALL_LIST,
+      mutation.RESET_ORDER_BY,
+      mutation.INCREASE_CURRENT_PAGE_NUMBER
     ]),
     addNewFeedList() {
       if (this.lastPageNumber <= this.currentPageNumber) return;

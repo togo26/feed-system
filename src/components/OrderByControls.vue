@@ -27,15 +27,16 @@
 
 <script>
 import { mapActions, mapMutations, mapState } from "vuex";
+import { state, mutation, action } from "@/constants/index.js";
 
 export default {
   props: ["resetSearch"],
   computed: {
-    ...mapState(["currentPageNumber", "orderBy"])
+    ...mapState([state.CURRENT_PAGE_NUMBER, state.ORDER_BY])
   },
   methods: {
-    ...mapActions(["addFeedListWithAdBanners"]),
-    ...mapMutations(["deleteAllList", "updateOrderBy"]),
+    ...mapActions([action.ADD_FEED_LIST_WITH_AD_BANNERS]),
+    ...mapMutations([mutation.DELETE_ALL_LIST, mutation.UPDATE_ORDER_BY]),
     handleRadioClick(e) {
       if (this.orderBy === e.target.value) return;
       this.updateOrderBy({ orderBy: e.target.value });

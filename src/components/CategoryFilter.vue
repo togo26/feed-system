@@ -21,6 +21,7 @@
 import { mapState, mapMutations, mapActions } from "vuex";
 import CheckBox from "@/components/CheckBox.vue";
 import Button from "@/components/Button/Button.vue";
+import { state, mutation, action } from "@/constants/index.js";
 
 export default {
   props: ["close-modal", "resetSearch"],
@@ -29,15 +30,15 @@ export default {
     CheckBox
   },
   computed: {
-    ...mapState(["categories", "isAdReductionMode"])
+    ...mapState([state.CATEGORIES, state.IS_AD_REDUCTION_MODE])
   },
   methods: {
     ...mapMutations([
-      "updateCategories",
-      "deleteAllList",
-      "updateAdReductionMode"
+      mutation.UPDATE_CATEGORIES,
+      mutation.DELETE_ALL_LIST,
+      mutation.UPDATE_AD_REDUCTION_MODE
     ]),
-    ...mapActions(["addFeedListWithAdBanners"]),
+    ...mapActions([action.ADD_FEED_LIST_WITH_AD_BANNERS]),
     handleCheckBoxClick(checkbox) {
       const newCategories = this.currentCheckList.map(category => {
         if (category.id === Number(checkbox.id)) {

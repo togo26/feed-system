@@ -1,20 +1,21 @@
 <template>
-  <button @click="$emit('handle-click')">{{ text }}</button>
+  <click-button @handle-click="$emit('handle-click')">
+    <slot>필터</slot>
+  </click-button>
 </template>
 
 <script>
+import Button from "@/components/Button/Button.vue";
+
 export default {
-  name: "FilterButton",
-  props: {
-    text: String
+  components: {
+    "click-button": Button
   }
 };
 </script>
 
 <style lang="scss" scoped>
 button {
-  all: unset;
-  cursor: pointer;
   width: 48px;
   height: 24px;
   border-radius: 3px;

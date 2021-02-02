@@ -5,14 +5,14 @@
     </modal-view>
     <div class="wrapper">
       <aside>
-        <Button text="로그인" />
+        <Button>로그인</Button>
       </aside>
       <section>
         <div class="sorting-controls">
           <order-by-controls />
           <filter-button text="필터" @handle-click="isModalOpened = true" />
         </div>
-        <feed-list />
+        <card-list :list="contentList" />
       </section>
     </div>
   </div>
@@ -20,10 +20,10 @@
 
 <script>
 import { mapActions, mapState, mapMutations } from "vuex";
-import Button from "@/components/Button.vue";
+import Button from "@/components/Button/Button.vue";
+import FilterButton from "@/components/Button/FilterButton.vue";
 import OrderByControls from "@/components/OrderByControls.vue";
-import FilterButton from "@/components/FilterButton.vue";
-import FeedList from "@/components/FeedList.vue";
+import CardList from "@/components/CardList.vue";
 import ModalView from "@/components/ModalView.vue";
 import CategoryFilter from "@/components/CategoryFilter.vue";
 import { debounce } from "@/utils/debounce.js";
@@ -33,7 +33,7 @@ export default {
   components: {
     Button,
     FilterButton,
-    FeedList,
+    CardList,
     OrderByControls,
     ModalView,
     CategoryFilter

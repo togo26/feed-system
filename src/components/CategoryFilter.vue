@@ -9,14 +9,14 @@
         v-for="(item, i) in categories"
       />
     </div>
-    <Button text="저장하기" @handle-click="handleButtonClick" />
+    <Button @handle-click="handleSaveClick">저장하기</Button>
   </div>
 </template>
 
 <script>
 import { mapState, mapMutations, mapActions } from "vuex";
 import CheckBox from "@/components/CheckBox.vue";
-import Button from "@/components/Button.vue";
+import Button from "@/components/Button/Button.vue";
 export default {
   props: ["close-modal"],
   components: {
@@ -38,7 +38,7 @@ export default {
       });
       this.currentCheckList = newCategories;
     },
-    handleButtonClick() {
+    handleSaveClick() {
       const isChanged = this.currentCheckList.some((category, idx) => {
         return category.isChecked !== this.categories[idx].isChecked;
       });

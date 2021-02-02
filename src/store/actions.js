@@ -3,6 +3,7 @@ import {
   fetchAdBannerList,
   fetchCategories
 } from "../utils/api.js";
+import { mutation, action } from "../constants/index.js";
 
 export default {
   async addFeedList({ commit, state }) {
@@ -13,27 +14,28 @@ export default {
     };
     try {
       const result = await fetchFeedList(options);
-      commit("setLastPageNumber", { lastPageNumber: result.last_page });
-      commit("addFeedList", { list: result.data || [] });
+      commit(mutation.SET_LAST_PAGE_NUMBER, {
+        lastPageNumber: result.last_page
+      });
+      commit(mutation.ADD_FEED_LIST, { list: result.data || [] });
     } catch (error) {
       console.error(error);
-      commit("resetLastPageNumber");
     }
   },
   async addAdBannerList({ commit, state }) {
     const options = { page: state.currentPageNumber };
     try {
       const result = await fetchAdBannerList(options);
-      commit("addAdBannerList", { list: result.data || [] });
+      commit(mutation.ADD_AD_BANNER_LIST, { list: result.data || [] });
     } catch (error) {
       console.error(error);
     }
   },
   async addFeedListWithAdBanners({ commit, dispatch }) {
     try {
-      await dispatch("addFeedList");
-      await dispatch("addAdBannerList");
-      commit("addFeedListWithAdBanners");
+      await dispatch(action.ADD_FEED_LIST);
+      await dispatch(action.ADD_AD_BANNER_LIST);
+      commit(mutation.ADD_FEED_LIST_WITH_AD_BANNERS);
     } catch (error) {
       console.error(error);
     }
@@ -41,7 +43,7 @@ export default {
   async addCategories({ commit }) {
     try {
       const result = await fetchCategories();
-      commit("addCategories", { list: result.category });
+      commit(mutation.ADD_CATEGORIES, { list: result.category });
     } catch (error) {
       console.error(error);
     }

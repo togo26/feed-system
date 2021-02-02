@@ -3,7 +3,7 @@
     <card class="wrapper">
       <div class="id-info">
         <span>{{ feed.category_id }}</span>
-        <span>{{ feed.id }}</span>
+        <span>피드 번호 - {{ feed.id }}</span>
       </div>
       <div class="user-info">
         <span>{{ feed.user_id }}</span>
@@ -32,6 +32,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.wrapper {
+  transition: height 0.3s ease;
+}
+
 .id-info {
   display: flex;
   justify-content: space-between;
@@ -67,11 +71,27 @@ h3 {
 p {
   width: 44vw;
   max-width: 700px;
-  height: 25px;
+  height: 23px;
   overflow: hidden;
   text-overflow: ellipsis;
-  white-space: nowrap;
+  white-space: initial;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
   color: #495057;
+  line-height: 24px;
+  transition: height 0.3s ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .wrapper:hover {
+    height: 210px;
+
+    & > p {
+      height: 46px;
+      -webkit-line-clamp: 2;
+    }
+  }
 }
 
 @media (max-width: 768px) {

@@ -9,6 +9,7 @@
         v-for="(item, i) in categories"
       />
     </div>
+    <p class="message" v-show="message">{{ message }}</p>
     <Button @handle-click="handleSaveClick">저장하기</Button>
     <div class="toggle-ad-reduction-mode" @click="toggleAdReductionMode">
       {{ currentAdReductionMode ? "광고 더보기" : "광고 줄이기" }}
@@ -21,7 +22,7 @@ import { mapState, mapMutations, mapActions } from "vuex";
 import CheckBox from "@/components/CheckBox.vue";
 import Button from "@/components/Button/Button.vue";
 export default {
-  props: ["close-modal"],
+  props: ["close-modal", "resetSearch"],
   components: {
     Button,
     CheckBox
@@ -49,14 +50,28 @@ export default {
       const isChanged = this.currentCheckList.some((category, idx) => {
         return category.isChecked !== this.categories[idx].isChecked;
       });
+
+      const isAllUnchecked = this.currentCheckList.some(
+        category => category.isChecked
+      );
+
+      if (!isAllUnchecked) {
+        this.message = "최소 하나의 필터가 체크 되어야 합니다.";
+        return;
+      }
+
       if (this.currentAdReductionMode !== this.isAdReductionMode) {
         this.updateAdReductionMode(this.currentAdReductionMode);
+        this.resetSearch();
         this.deleteAllList();
         this.addFeedListWithAdBanners();
       }
+
       if (!isChanged) return this.closeModal();
+
       this.updateCategories({ list: this.currentCheckList });
       this.closeModal();
+      this.resetSearch();
       this.deleteAllList();
       this.addFeedListWithAdBanners();
     },
@@ -67,7 +82,8 @@ export default {
   data() {
     return {
       currentCheckList: null,
-      currentAdReductionMode: null
+      currentAdReductionMode: null,
+      message: ""
     };
   },
   beforeMount() {
@@ -100,6 +116,12 @@ export default {
   text-decoration: underline;
 }
 
+.message {
+  font-size: 12px;
+  color: #eb4d4b;
+  margin-top: -12px;
+}
+
 button {
   align-self: flex-end;
   width: 100px;
@@ -123,6 +145,12 @@ h3 {
   .toggle-ad-reduction-mode {
     left: 115px;
     bottom: -6px;
+  }
+
+  .message {
+    box-sizing: border-box;
+    padding-bottom: 4px;
+    text-align: center;
   }
 }
 </style>

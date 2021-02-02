@@ -1,6 +1,6 @@
 <template>
   <router-link :to="'/' + feed.id" v-if="feed">
-    <div class="wrapper">
+    <card class="wrapper">
       <div class="id-info">
         <span>{{ feed.category_id }}</span>
         <span>{{ feed.id }}</span>
@@ -11,14 +11,18 @@
       </div>
       <h3>{{ feed.title }}</h3>
       <p>{{ feed.contents }}</p>
-    </div>
+    </card>
   </router-link>
 </template>
 
 <script>
+import Card from "@/components/Card/Card.vue";
 import { sliceTimeString } from "@/utils/sliceTimeString.js";
 export default {
   props: ["feed"],
+  components: {
+    Card
+  },
   data() {
     return {
       sliceTimeString
@@ -28,16 +32,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.wrapper {
-  box-sizing: border-box;
-  width: 100%;
-  height: 180px;
-  margin-bottom: 30px;
-  padding: 0px 30px;
-  border-radius: 5px;
-  border: solid 1px #e1e4e7;
-}
-
 .id-info {
   display: flex;
   justify-content: space-between;
@@ -57,6 +51,7 @@ export default {
     color: #00c854;
   }
 }
+
 h3 {
   width: 44vw;
   max-width: 700px;

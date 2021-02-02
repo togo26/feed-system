@@ -1,14 +1,12 @@
 <template>
   <div>
-    <slot>
-      <conditional-card
-        :key="i"
-        :content="item"
-        :index="i"
-        :maxFeedLength="maxFeedLength"
-        v-for="(item, i) in list"
-      />
-    </slot>
+    <conditional-card
+      :key="i"
+      :content="item"
+      :index="i"
+      :maxFeedLength="maxFeedLength"
+      v-for="(item, i) in list"
+    />
   </div>
 </template>
 

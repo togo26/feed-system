@@ -10,6 +10,7 @@
 
 <script>
 import CloseButton from "@/components/Button/CloseButton.vue";
+
 export default {
   components: {
     CloseButton

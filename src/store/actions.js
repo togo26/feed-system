@@ -8,20 +8,20 @@ export default {
   async addFeedList({ commit, state }) {
     const options = {
       orderBy: state.orderBy,
-      page: state.currentPage,
+      page: state.currentPageNumber,
       categories: state.categories
     };
     try {
       const result = await fetchFeedList(options);
-      commit("setLastPage", { lastPage: result.last_page });
+      commit("setLastPageNumber", { lastPageNumber: result.last_page });
       commit("addFeedList", { list: result.data || [] });
     } catch (error) {
       console.error(error);
-      commit("resetLastPage");
+      commit("resetLastPageNumber");
     }
   },
   async addAdBannerList({ commit, state }) {
-    const options = { page: state.currentPage };
+    const options = { page: state.currentPageNumber };
     try {
       const result = await fetchAdBannerList(options);
       commit("addAdBannerList", { list: result.data || [] });

@@ -14,7 +14,7 @@
           type="text"
           placeholder="Search"
           v-model="search"
-          @change="searchKeyword"
+          @change="searchFeedsWithKeyword"
         />
         <p class="search-list-count" v-show="searchList.length">
           검색 결과 <span>{{ searchList.length }}</span>
@@ -32,7 +32,7 @@
             v-for="(item, i) in getSelectedCategories"
           />
         </div>
-        <card-list
+        <feed-with-ad-card-list
           :list="contentList"
           :maxFeedLength="isAdReductionMode ? '6' : '4'"
           v-if="!search && contentList.length"
@@ -60,7 +60,7 @@ import { mapActions, mapState, mapMutations } from "vuex";
 import Button from "@/components/Button/Button.vue";
 import FilterButton from "@/components/Button/FilterButton.vue";
 import OrderByControls from "@/components/OrderByControls.vue";
-import CardList from "@/components/CardList.vue";
+import FeedWithAdCardList from "@/components/FeedWithAdCardList.vue";
 import FeedCard from "@/components/Card/FeedCard.vue";
 import ModalView from "@/components/ModalView.vue";
 import CategoryFilter from "@/components/CategoryFilter.vue";
@@ -68,6 +68,7 @@ import Tag from "@/components/Tag.vue";
 import Loading from "@/components/Loading.vue";
 import { fetchFeedList } from "@/utils/api.js";
 import { debounce } from "@/utils/debounce.js";
+import { observeScrollEnd } from "@/utils/observeScrollEnd.js";
 import { checkInternetExplores } from "@/utils/checkInternetExplores.js";
 
 export default {
@@ -75,7 +76,7 @@ export default {
   components: {
     Button,
     FilterButton,
-    CardList,
+    FeedWithAdCardList,
     FeedCard,
     OrderByControls,
     ModalView,
@@ -85,8 +86,8 @@ export default {
   },
   computed: {
     ...mapState([
-      "lastPage",
-      "currentPage",
+      "lastPageNumber",
+      "currentPageNumber",
       "categories",
       "orderBy",
       "contentList",
@@ -105,18 +106,17 @@ export default {
   },
   methods: {
     ...mapActions(["addFeedListWithAdBanners", "addCategories"]),
-    ...mapMutations(["deleteAllList", "resetOrderBy", "updateCurrentPage"]),
-    observeScrollEnd(fn) {
-      const clientHeight = document.body.clientHeight;
-      const windowInnerHeight = window.innerHeight;
-      if (window.scrollY + 1 >= clientHeight - windowInnerHeight) fn();
-    },
+    ...mapMutations([
+      "deleteAllList",
+      "resetOrderBy",
+      "increaseCurrentPageNumber"
+    ]),
     addNewFeedList() {
-      if (this.lastPage <= this.currentPage) return;
-      this.updateCurrentPage();
+      if (this.lastPageNumber <= this.currentPageNumber) return;
+      this.increaseCurrentPageNumber();
       this.addFeedListWithAdBanners();
     },
-    updateSearchList(list) {
+    addSearchList(list) {
       this.searchList = list;
       this.isSearching = false;
     },
@@ -125,29 +125,28 @@ export default {
       this.searchList = [];
       this.isSearching = false;
     },
-    async searchKeyword({ target: { value: keyword } }) {
+    async searchFeedsWithKeyword({ target: { value: keyword } }) {
       if (!keyword) return;
 
       this.isSearching = true;
 
+      const regex = new RegExp(keyword, "gm");
       const result = await fetchFeedList({
         limit: 100,
-        currentPage: 0,
+        currentPageNumber: 0,
         orderBy: this.orderBy,
         categories: this.categories
       });
-      const regex = new RegExp(keyword, "gm");
-      let filteredList = result.data.filter(
-        feed => regex.exec(feed.contents) || regex.exec(feed.title)
-      );
 
-      filteredList = filteredList.map(feed => ({
-        ...feed,
-        category_id:
-          this.categories[feed.category_id - 1]?.name || feed.category_id
-      }));
+      const filteredList = result.data
+        .filter(feed => regex.exec(feed.contents) || regex.exec(feed.title))
+        .map(feed => ({
+          ...feed,
+          category_id:
+            this.categories[feed.category_id - 1]?.name || feed.category_id
+        }));
 
-      this.updateSearchList(filteredList);
+      this.addSearchList(filteredList);
     }
   },
   data() {
@@ -162,13 +161,14 @@ export default {
   },
   async beforeMount() {
     this.isIE = checkInternetExplores();
+
     if (this.isIE) return;
     if (!this.categories.length) await this.addCategories();
     if (!this.contentList.length) await this.addFeedListWithAdBanners();
   },
   mounted() {
     this.debouncedObservationScrollEnd = debounce(
-      () => this.observeScrollEnd(this.addNewFeedList),
+      () => observeScrollEnd(this.addNewFeedList),
       300
     );
     document.addEventListener("scroll", this.debouncedObservationScrollEnd);

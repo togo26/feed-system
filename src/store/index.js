@@ -11,8 +11,8 @@ const state = {
   adBannerList: [],
   contentList: [],
   categories: [],
-  lastPage: 0,
-  currentPage: 1,
+  lastPageNumber: 0,
+  currentPageNumber: 1,
   orderBy: "ascending",
   isAdReductionMode: false
 };

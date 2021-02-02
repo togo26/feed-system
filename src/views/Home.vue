@@ -1,5 +1,5 @@
 <template>
-  <div class="home">
+  <div class="home" v-if="!isIE">
     <modal-view v-if="isModalOpened" @close-modal="isModalOpened = false">
       <category-filter :close-modal="() => (isModalOpened = false)" />
     </modal-view>
@@ -12,9 +12,24 @@
           <order-by-controls />
           <filter-button text="필터" @handle-click="isModalOpened = true" />
         </div>
-        <card-list :list="contentList" />
+        <div class="filter-tags">
+          <tag
+            :key="i"
+            :text="item.name"
+            v-for="(item, i) in getSelectedCategories"
+          />
+        </div>
+        <card-list
+          :list="contentList"
+          :maxFeedLength="isAdReductionMode ? '6' : '4'"
+          v-if="contentList.length"
+        />
+        <loading v-else />
       </section>
     </div>
+  </div>
+  <div class="home" v-else>
+    <p>최신 브라우저를 이용해주세요.</p>
   </div>
 </template>
 
@@ -26,7 +41,10 @@ import OrderByControls from "@/components/OrderByControls.vue";
 import CardList from "@/components/CardList.vue";
 import ModalView from "@/components/ModalView.vue";
 import CategoryFilter from "@/components/CategoryFilter.vue";
+import Tag from "@/components/Tag.vue";
+import Loading from "@/components/Loading.vue";
 import { debounce } from "@/utils/debounce.js";
+import { checkInternetExplores } from "@/utils/checkInternetExplores.js";
 
 export default {
   name: "Home",
@@ -36,10 +54,21 @@ export default {
     CardList,
     OrderByControls,
     ModalView,
-    CategoryFilter
+    CategoryFilter,
+    Tag,
+    Loading
   },
   computed: {
-    ...mapState(["lastPage", "currentPage", "categories", "contentList"])
+    ...mapState([
+      "lastPage",
+      "currentPage",
+      "categories",
+      "contentList",
+      "isAdReductionMode"
+    ]),
+    getSelectedCategories() {
+      return this.categories.filter(category => category.isChecked);
+    }
   },
   methods: {
     ...mapActions(["addFeedListWithAdBanners", "addCategories"]),
@@ -58,10 +87,13 @@ export default {
   data() {
     return {
       debouncedObservationScrollEnd: null,
-      isModalOpened: false
+      isModalOpened: false,
+      isIE: false
     };
   },
   async beforeMount() {
+    this.isIE = checkInternetExplores();
+    if (this.isIE) return;
     if (!this.categories.length) await this.addCategories();
     if (!this.contentList.length) await this.addFeedListWithAdBanners();
   },
@@ -110,6 +142,14 @@ section {
   margin-bottom: 11px;
 }
 
+.filter-tags {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 32px;
+  margin-bottom: 12px;
+}
+
 @media (max-width: 924px) {
   aside {
     display: none;
@@ -136,6 +176,14 @@ section {
     height: 56px;
     margin: 0;
     padding: 10px 15px 10px 15px;
+    border-bottom: 1px solid #e1e4e7;
+  }
+
+  .filter-tags {
+    box-sizing: border-box;
+    height: 56px;
+    padding: 0px 10px;
+    margin: 0;
     border-bottom: 1px solid #e1e4e7;
   }
 }

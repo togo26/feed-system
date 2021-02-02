@@ -13,7 +13,8 @@ const state = {
   categories: [],
   lastPage: 0,
   currentPage: 1,
-  orderBy: "ascending"
+  orderBy: "ascending",
+  isAdReductionMode: false
 };
 
 export default new Vuex.Store({

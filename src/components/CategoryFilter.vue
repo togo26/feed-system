@@ -10,6 +10,9 @@
       />
     </div>
     <Button @handle-click="handleSaveClick">저장하기</Button>
+    <div class="toggle-ad-reduction-mode" @click="toggleAdReductionMode">
+      {{ currentAdReductionMode ? "광고 더보기" : "광고 줄이기" }}
+    </div>
   </div>
 </template>
 
@@ -24,10 +27,14 @@ export default {
     CheckBox
   },
   computed: {
-    ...mapState(["categories"])
+    ...mapState(["categories", "isAdReductionMode"])
   },
   methods: {
-    ...mapMutations(["updateCategories", "deleteAllList"]),
+    ...mapMutations([
+      "updateCategories",
+      "deleteAllList",
+      "updateAdReductionMode"
+    ]),
     ...mapActions(["addFeedListWithAdBanners"]),
     handleCheckBoxClick(checkbox) {
       const newCategories = this.currentCheckList.map(category => {
@@ -42,19 +49,29 @@ export default {
       const isChanged = this.currentCheckList.some((category, idx) => {
         return category.isChecked !== this.categories[idx].isChecked;
       });
+      if (this.currentAdReductionMode !== this.isAdReductionMode) {
+        this.updateAdReductionMode(this.currentAdReductionMode);
+        this.deleteAllList();
+        this.addFeedListWithAdBanners();
+      }
       if (!isChanged) return this.closeModal();
       this.updateCategories({ list: this.currentCheckList });
       this.closeModal();
       this.deleteAllList();
       this.addFeedListWithAdBanners();
+    },
+    toggleAdReductionMode() {
+      this.currentAdReductionMode = !this.currentAdReductionMode;
     }
   },
   data() {
     return {
-      currentCheckList: null
+      currentCheckList: null,
+      currentAdReductionMode: null
     };
   },
   beforeMount() {
+    this.currentAdReductionMode = this.isAdReductionMode;
     this.currentCheckList = this.categories.map(category => ({ ...category }));
   }
 };
@@ -62,6 +79,7 @@ export default {
 
 <style lang="scss" scoped>
 .category-filter-controls {
+  position: relative;
   display: flex;
   flex-direction: column;
   padding: 16px;
@@ -71,6 +89,15 @@ export default {
   display: flex;
   flex-direction: column;
   height: 120px;
+}
+
+.toggle-ad-reduction-mode {
+  cursor: pointer;
+  position: absolute;
+  bottom: 20px;
+  color: #bbb;
+  font-size: 14px;
+  text-decoration: underline;
 }
 
 button {
@@ -91,6 +118,11 @@ h3 {
   button {
     align-self: flex-start;
     width: 100%;
+  }
+
+  .toggle-ad-reduction-mode {
+    left: 115px;
+    bottom: -6px;
   }
 }
 </style>

@@ -1,7 +1,7 @@
 <template>
   <article>
     <component
-      :is="(index + 1) % 4 ? 'FeedCard' : 'AdCard'"
+      :is="(index + 1) % maxFeedLength ? 'FeedCard' : 'AdCard'"
       :ad="content"
       :feed="content"
     >
@@ -14,7 +14,7 @@ import FeedCard from "@/components/Card/FeedCard.vue";
 import AdCard from "@/components/Card/AdCard.vue";
 
 export default {
-  props: ["content", "index"],
+  props: ["content", "index", "maxFeedLength"],
   components: {
     FeedCard,
     AdCard

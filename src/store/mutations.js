@@ -11,12 +11,13 @@ export default {
     state.adBannerList = [...state.adBannerList, ...payload.list];
   },
   addFeedListWithAdBanners(state) {
-    const { feedList, adBannerList } = state;
+    const { feedList, adBannerList, isAdReductionMode } = state;
+    const maxFeedLength = isAdReductionMode ? 5 : 3;
     const combinedList = [];
     let lastFeedGroupIndex = 0;
 
-    for (let i = 0, j = 0; i < feedList.length; i += 2, j += 3) {
-      const feeds = feedList.slice(j, j + 3);
+    for (let i = 0, j = 0; i < feedList.length; i += 2, j += maxFeedLength) {
+      const feeds = feedList.slice(j, j + maxFeedLength);
       if (feeds.length <= 0) {
         lastFeedGroupIndex = i - 2;
         break;
@@ -28,9 +29,9 @@ export default {
       const targetIndex = (i + 1) * 2 - 1;
       const lastFeedGroupLength = combinedList[targetIndex - 1]?.length;
 
-      if (lastFeedGroupLength < 3) break;
+      if (lastFeedGroupLength < maxFeedLength) break;
       if (lastFeedGroupIndex < targetIndex) {
-        if (lastFeedGroupLength >= 3) {
+        if (lastFeedGroupLength >= maxFeedLength) {
           combinedList[targetIndex] = adBannerList[i] || false;
           break;
         }
@@ -67,5 +68,8 @@ export default {
   },
   updateCategories(state, payload) {
     state.categories = payload.list;
+  },
+  updateAdReductionMode(state, payload) {
+    state.isAdReductionMode = payload;
   }
 };

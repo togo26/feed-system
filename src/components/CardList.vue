@@ -5,6 +5,7 @@
         :key="i"
         :content="item"
         :index="i"
+        :maxFeedLength="maxFeedLength"
         v-for="(item, i) in list"
       />
     </slot>
@@ -15,7 +16,7 @@
 import ConditionalCard from "@/components/Card/ConditionalCard.vue";
 
 export default {
-  props: ["list"],
+  props: ["list", "maxFeedLength"],
   components: {
     ConditionalCard
   }

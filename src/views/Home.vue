@@ -12,6 +12,13 @@
           <order-by-controls />
           <filter-button text="필터" @handle-click="isModalOpened = true" />
         </div>
+        <div class="filter-tags">
+          <tag
+            :key="i"
+            :text="item.name"
+            v-for="(item, i) in getSelectedCategories"
+          />
+        </div>
         <card-list :list="contentList" />
       </section>
     </div>
@@ -26,6 +33,7 @@ import OrderByControls from "@/components/OrderByControls.vue";
 import CardList from "@/components/CardList.vue";
 import ModalView from "@/components/ModalView.vue";
 import CategoryFilter from "@/components/CategoryFilter.vue";
+import Tag from "@/components/Tag.vue";
 import { debounce } from "@/utils/debounce.js";
 
 export default {
@@ -36,10 +44,14 @@ export default {
     CardList,
     OrderByControls,
     ModalView,
-    CategoryFilter
+    CategoryFilter,
+    Tag
   },
   computed: {
-    ...mapState(["lastPage", "currentPage", "categories", "contentList"])
+    ...mapState(["lastPage", "currentPage", "categories", "contentList"]),
+    getSelectedCategories() {
+      return this.categories.filter(category => category.isChecked);
+    }
   },
   methods: {
     ...mapActions(["addFeedListWithAdBanners", "addCategories"]),
@@ -110,6 +122,14 @@ section {
   margin-bottom: 11px;
 }
 
+.filter-tags {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 32px;
+  margin-bottom: 12px;
+}
+
 @media (max-width: 924px) {
   aside {
     display: none;
@@ -136,6 +156,14 @@ section {
     height: 56px;
     margin: 0;
     padding: 10px 15px 10px 15px;
+    border-bottom: 1px solid #e1e4e7;
+  }
+
+  .filter-tags {
+    box-sizing: border-box;
+    height: 56px;
+    padding: 0px 10px;
+    margin: 0;
     border-bottom: 1px solid #e1e4e7;
   }
 }

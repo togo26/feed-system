@@ -21,6 +21,7 @@
 import { mapState, mapMutations, mapActions } from "vuex";
 import CheckBox from "@/components/CheckBox.vue";
 import Button from "@/components/Button/Button.vue";
+
 export default {
   props: ["close-modal", "resetSearch"],
   components: {
@@ -47,27 +48,30 @@ export default {
       this.currentCheckList = newCategories;
     },
     handleSaveClick() {
-      const isChanged = this.currentCheckList.some((category, idx) => {
-        return category.isChecked !== this.categories[idx].isChecked;
-      });
+      const isChangedAdReductionMode =
+        this.currentAdReductionMode !== this.isAdReductionMode;
 
-      const isAllUnchecked = this.currentCheckList.some(
+      const isChangedCheckState = this.currentCheckList.some(
+        (category, idx) => category.isChecked !== this.categories[idx].isChecked
+      );
+
+      const isCheckedAtLeastOne = this.currentCheckList.some(
         category => category.isChecked
       );
 
-      if (!isAllUnchecked) {
+      if (!isCheckedAtLeastOne) {
         this.message = "최소 하나의 필터가 체크 되어야 합니다.";
         return;
       }
 
-      if (this.currentAdReductionMode !== this.isAdReductionMode) {
+      if (isChangedAdReductionMode) {
         this.updateAdReductionMode(this.currentAdReductionMode);
         this.resetSearch();
         this.deleteAllList();
         this.addFeedListWithAdBanners();
       }
 
-      if (!isChanged) return this.closeModal();
+      if (!isChangedCheckState) return this.closeModal();
 
       this.updateCategories({ list: this.currentCheckList });
       this.closeModal();

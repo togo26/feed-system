@@ -11,6 +11,7 @@
 <script>
 import Card from "@/components/Card/Card.vue";
 import { sliceTimeString } from "@/utils/sliceTimeString.js";
+
 export default {
   props: ["reply"],
   components: {

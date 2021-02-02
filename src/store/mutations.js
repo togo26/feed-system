@@ -49,14 +49,14 @@ export default {
     state.feedList = [];
     state.adBannerList = [];
     state.contentList = [];
-    state.lastPage = 0;
-    state.currentPage = 1;
+    state.lastPageNumber = 0;
+    state.currentPageNumber = 1;
   },
-  setLastPage(state, payload) {
-    state.lastPage = payload.lastPage;
+  setLastPageNumber(state, payload) {
+    state.lastPageNumber = payload.lastPageNumber;
   },
-  updateCurrentPage(state) {
-    state.currentPage++;
+  increaseCurrentPageNumber(state) {
+    state.currentPageNumber++;
   },
   updateOrderBy(state, payload) {
     state.orderBy = payload.orderBy;

@@ -15,6 +15,7 @@
 
 <script>
 import Card from "@/components/Card/Card.vue";
+
 export default {
   props: ["ad"],
   components: {

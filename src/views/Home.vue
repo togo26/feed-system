@@ -14,7 +14,7 @@
           type="text"
           placeholder="Search"
           v-model="search"
-          @change="searchKeyword"
+          @change="searchFeedsWithKeyword"
         />
         <p class="search-list-count" v-show="searchList.length">
           검색 결과 <span>{{ searchList.length }}</span>
@@ -85,8 +85,8 @@ export default {
   },
   computed: {
     ...mapState([
-      "lastPage",
-      "currentPage",
+      "lastPageNumber",
+      "currentPageNumber",
       "categories",
       "orderBy",
       "contentList",
@@ -105,18 +105,22 @@ export default {
   },
   methods: {
     ...mapActions(["addFeedListWithAdBanners", "addCategories"]),
-    ...mapMutations(["deleteAllList", "resetOrderBy", "updateCurrentPage"]),
+    ...mapMutations([
+      "deleteAllList",
+      "resetOrderBy",
+      "increaseCurrentPageNumber"
+    ]),
     observeScrollEnd(fn) {
       const clientHeight = document.body.clientHeight;
       const windowInnerHeight = window.innerHeight;
       if (window.scrollY + 1 >= clientHeight - windowInnerHeight) fn();
     },
     addNewFeedList() {
-      if (this.lastPage <= this.currentPage) return;
-      this.updateCurrentPage();
+      if (this.lastPageNumber <= this.currentPageNumber) return;
+      this.increaseCurrentPageNumber();
       this.addFeedListWithAdBanners();
     },
-    updateSearchList(list) {
+    addSearchList(list) {
       this.searchList = list;
       this.isSearching = false;
     },
@@ -125,29 +129,28 @@ export default {
       this.searchList = [];
       this.isSearching = false;
     },
-    async searchKeyword({ target: { value: keyword } }) {
+    async searchFeedsWithKeyword({ target: { value: keyword } }) {
       if (!keyword) return;
 
       this.isSearching = true;
 
+      const regex = new RegExp(keyword, "gm");
       const result = await fetchFeedList({
         limit: 100,
-        currentPage: 0,
+        currentPageNumber: 0,
         orderBy: this.orderBy,
         categories: this.categories
       });
-      const regex = new RegExp(keyword, "gm");
-      let filteredList = result.data.filter(
-        feed => regex.exec(feed.contents) || regex.exec(feed.title)
-      );
 
-      filteredList = filteredList.map(feed => ({
-        ...feed,
-        category_id:
-          this.categories[feed.category_id - 1]?.name || feed.category_id
-      }));
+      const filteredList = result.data
+        .filter(feed => regex.exec(feed.contents) || regex.exec(feed.title))
+        .map(feed => ({
+          ...feed,
+          category_id:
+            this.categories[feed.category_id - 1]?.name || feed.category_id
+        }));
 
-      this.updateSearchList(filteredList);
+      this.addSearchList(filteredList);
     }
   },
   data() {
@@ -162,6 +165,7 @@ export default {
   },
   async beforeMount() {
     this.isIE = checkInternetExplores();
+
     if (this.isIE) return;
     if (!this.categories.length) await this.addCategories();
     if (!this.contentList.length) await this.addFeedListWithAdBanners();

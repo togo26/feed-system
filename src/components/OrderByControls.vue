@@ -31,7 +31,7 @@ import { mapActions, mapMutations, mapState } from "vuex";
 export default {
   props: ["resetSearch"],
   computed: {
-    ...mapState(["currentPage", "orderBy"])
+    ...mapState(["currentPageNumber", "orderBy"])
   },
   methods: {
     ...mapActions(["addFeedListWithAdBanners"]),

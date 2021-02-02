@@ -1,6 +1,6 @@
 <template>
-  <div class="feed-detail" v-if="feed">
-    <div class="container">
+  <div class="feed-detail">
+    <div class="container" v-if="feed">
       <feed-detail-card :feed="feed" />
       <div class="reply-count">
         <p>답변</p>
@@ -8,18 +8,21 @@
       </div>
       <reply-card :key="i" :reply="item" v-for="(item, i) in feed.reply" />
     </div>
+    <loading v-else />
   </div>
 </template>
 
 <script>
 import FeedDetailCard from "@/components/Card/FeedDetailCard.vue";
 import ReplyCard from "@/components/Card/ReplyCard.vue";
+import Loading from "@/components/Loading.vue";
 import { fetchFeedDetail } from "@/utils/api.js";
 
 export default {
   components: {
     FeedDetailCard,
-    ReplyCard
+    ReplyCard,
+    Loading
   },
   data() {
     return {

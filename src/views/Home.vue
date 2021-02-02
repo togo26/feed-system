@@ -19,7 +19,8 @@
             v-for="(item, i) in getSelectedCategories"
           />
         </div>
-        <card-list :list="contentList" />
+        <card-list :list="contentList" v-if="contentList.length" />
+        <loading v-else />
       </section>
     </div>
   </div>
@@ -34,6 +35,7 @@ import CardList from "@/components/CardList.vue";
 import ModalView from "@/components/ModalView.vue";
 import CategoryFilter from "@/components/CategoryFilter.vue";
 import Tag from "@/components/Tag.vue";
+import Loading from "@/components/Loading.vue";
 import { debounce } from "@/utils/debounce.js";
 
 export default {
@@ -45,7 +47,8 @@ export default {
     OrderByControls,
     ModalView,
     CategoryFilter,
-    Tag
+    Tag,
+    Loading
   },
   computed: {
     ...mapState(["lastPage", "currentPage", "categories", "contentList"]),

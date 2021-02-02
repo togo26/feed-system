@@ -1,5 +1,5 @@
 <template>
-  <div class="wrapper" v-if="ad">
+  <card class="wrapper" v-if="ad">
     <div class="ad-caption">
       <span>sponsored</span>
     </div>
@@ -10,24 +10,22 @@
         <p>{{ ad.contents }}</p>
       </div>
     </div>
-  </div>
+  </card>
 </template>
 
 <script>
+import Card from "@/components/Card/Card.vue";
 export default {
-  props: ["ad"]
+  props: ["ad"],
+  components: {
+    Card
+  }
 };
 </script>
 
 <style lang="scss" scoped>
 .wrapper {
-  box-sizing: border-box;
-  width: 100%;
   height: 255px;
-  margin-bottom: 30px;
-  padding: 0px 30px;
-  border-radius: 5px;
-  border: solid 1px #e1e4e7;
 }
 
 .ad-caption {
@@ -112,6 +110,7 @@ export default {
       h3 {
         width: 96%;
       }
+
       p {
         width: 96%;
         -webkit-line-clamp: 2;

@@ -1,14 +1,11 @@
 <template>
-  <button @click="$emit('handle-click')">{{ text }}</button>
+  <button @click="$emit('handle-click')">
+    <slot>Button</slot>
+  </button>
 </template>
 
 <script>
-export default {
-  name: "Button",
-  props: {
-    text: String
-  }
-};
+export default {};
 </script>
 
 <style lang="scss" scoped>

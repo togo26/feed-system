@@ -12,8 +12,8 @@
 </template>
 
 <script>
-import FeedDetailCard from "@/components/FeedDetailCard.vue";
-import ReplyCard from "@/components/ReplyCard.vue";
+import FeedDetailCard from "@/components/Card/FeedDetailCard.vue";
+import ReplyCard from "@/components/Card/ReplyCard.vue";
 import { fetchFeedDetail } from "@/utils/api.js";
 
 export default {

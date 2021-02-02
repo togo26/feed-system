@@ -1,15 +1,19 @@
 <template>
-  <div class="wrapper">
+  <card class="wrapper">
     <h3>{{ feed.title }}</h3>
     <p>{{ feed.contents }}</p>
     <p class="created-at">{{ sliceTimeString(feed.created_at) }}</p>
-  </div>
+  </card>
 </template>
 
 <script>
+import Card from "@/components/Card/Card.vue";
 import { sliceTimeString } from "@/utils/sliceTimeString.js";
 export default {
   props: ["feed"],
+  components: {
+    Card
+  },
   data() {
     return {
       sliceTimeString
@@ -20,12 +24,8 @@ export default {
 
 <style lang="scss" scoped>
 .wrapper {
-  box-sizing: border-box;
-  width: 100%;
   height: 210px;
-  margin-bottom: 30px;
   padding: 25px 30px;
-  border-radius: 5px;
   border: solid 1px #00c854;
 }
 

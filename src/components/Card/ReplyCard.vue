@@ -1,17 +1,21 @@
 <template>
-  <div class="wrapper">
+  <card class="wrapper">
     <div class="id-info">
       <span>{{ reply.user.name }}</span>
     </div>
     <p>{{ reply.contents }}</p>
     <p class="created-at">{{ sliceTimeString(reply.created_at) }}</p>
-  </div>
+  </card>
 </template>
 
 <script>
+import Card from "@/components/Card/Card.vue";
 import { sliceTimeString } from "@/utils/sliceTimeString.js";
 export default {
   props: ["reply"],
+  components: {
+    Card
+  },
   data() {
     return {
       sliceTimeString
@@ -22,13 +26,8 @@ export default {
 
 <style lang="scss" scoped>
 .wrapper {
-  box-sizing: border-box;
-  width: 100%;
   height: 200px;
-  margin-bottom: 30px;
   padding: 26px 30px;
-  border-radius: 5px;
-  border: solid 1px #e1e4e7;
 }
 
 .id-info {

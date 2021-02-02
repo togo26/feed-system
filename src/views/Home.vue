@@ -19,7 +19,11 @@
             v-for="(item, i) in getSelectedCategories"
           />
         </div>
-        <card-list :list="contentList" v-if="contentList.length" />
+        <card-list
+          :list="contentList"
+          :maxFeedLength="isAdReductionMode ? '6' : '4'"
+          v-if="contentList.length"
+        />
         <loading v-else />
       </section>
     </div>
@@ -55,7 +59,13 @@ export default {
     Loading
   },
   computed: {
-    ...mapState(["lastPage", "currentPage", "categories", "contentList"]),
+    ...mapState([
+      "lastPage",
+      "currentPage",
+      "categories",
+      "contentList",
+      "isAdReductionMode"
+    ]),
     getSelectedCategories() {
       return this.categories.filter(category => category.isChecked);
     }

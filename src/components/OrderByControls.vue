@@ -29,6 +29,7 @@
 import { mapActions, mapMutations, mapState } from "vuex";
 
 export default {
+  props: ["resetSearch"],
   computed: {
     ...mapState(["currentPage", "orderBy"])
   },
@@ -38,6 +39,7 @@ export default {
     handleRadioClick(e) {
       if (this.orderBy === e.target.value) return;
       this.updateOrderBy({ orderBy: e.target.value });
+      this.resetSearch();
       this.deleteAllList();
       this.addFeedListWithAdBanners();
     }

@@ -1,15 +1,28 @@
 <template>
   <div class="home" v-if="!isIE">
     <modal-view v-if="isModalOpened" @close-modal="isModalOpened = false">
-      <category-filter :close-modal="() => (isModalOpened = false)" />
+      <category-filter
+        :close-modal="() => (isModalOpened = false)"
+        :resetSearch="resetSearch"
+      />
     </modal-view>
     <div class="wrapper">
       <aside>
         <Button>로그인</Button>
+        <input
+          class="search"
+          type="text"
+          placeholder="Search"
+          v-model="search"
+          @change="searchKeyword"
+        />
+        <p class="search-list-count" v-show="searchList.length">
+          검색 결과 <span>{{ searchList.length }}</span>
+        </p>
       </aside>
       <section>
         <div class="sorting-controls">
-          <order-by-controls />
+          <order-by-controls :resetSearch="resetSearch" />
           <filter-button text="필터" @handle-click="isModalOpened = true" />
         </div>
         <div class="filter-tags">
@@ -22,8 +35,17 @@
         <card-list
           :list="contentList"
           :maxFeedLength="isAdReductionMode ? '6' : '4'"
-          v-if="contentList.length"
+          v-if="!search && contentList.length"
         />
+        <feed-card
+          :key="i"
+          :feed="item"
+          v-for="(item, i) in searchList"
+          v-else-if="searchList.length"
+        />
+        <div v-else-if="search && !isSearching && !searchList.length">
+          검색 결과가 존재하지 않습니다.
+        </div>
         <loading v-else />
       </section>
     </div>
@@ -39,10 +61,12 @@ import Button from "@/components/Button/Button.vue";
 import FilterButton from "@/components/Button/FilterButton.vue";
 import OrderByControls from "@/components/OrderByControls.vue";
 import CardList from "@/components/CardList.vue";
+import FeedCard from "@/components/Card/FeedCard.vue";
 import ModalView from "@/components/ModalView.vue";
 import CategoryFilter from "@/components/CategoryFilter.vue";
 import Tag from "@/components/Tag.vue";
 import Loading from "@/components/Loading.vue";
+import { fetchFeedList } from "@/utils/api.js";
 import { debounce } from "@/utils/debounce.js";
 import { checkInternetExplores } from "@/utils/checkInternetExplores.js";
 
@@ -52,6 +76,7 @@ export default {
     Button,
     FilterButton,
     CardList,
+    FeedCard,
     OrderByControls,
     ModalView,
     CategoryFilter,
@@ -63,11 +88,19 @@ export default {
       "lastPage",
       "currentPage",
       "categories",
+      "orderBy",
       "contentList",
+      "feedList",
       "isAdReductionMode"
     ]),
     getSelectedCategories() {
       return this.categories.filter(category => category.isChecked);
+    }
+  },
+  watch: {
+    search: async function(keyword) {
+      this.isSearching = true;
+      if (keyword === "") return this.resetSearch();
     }
   },
   methods: {
@@ -82,13 +115,49 @@ export default {
       if (this.lastPage <= this.currentPage) return;
       this.updateCurrentPage();
       this.addFeedListWithAdBanners();
+    },
+    updateSearchList(list) {
+      this.searchList = list;
+      this.isSearching = false;
+    },
+    resetSearch() {
+      this.search = "";
+      this.searchList = [];
+      this.isSearching = false;
+    },
+    async searchKeyword({ target: { value: keyword } }) {
+      if (!keyword) return;
+
+      this.isSearching = true;
+
+      const result = await fetchFeedList({
+        limit: 100,
+        currentPage: 0,
+        orderBy: this.orderBy,
+        categories: this.categories
+      });
+      const regex = new RegExp(keyword, "gm");
+      let filteredList = result.data.filter(
+        feed => regex.exec(feed.contents) || regex.exec(feed.title)
+      );
+
+      filteredList = filteredList.map(feed => ({
+        ...feed,
+        category_id:
+          this.categories[feed.category_id - 1]?.name || feed.category_id
+      }));
+
+      this.updateSearchList(filteredList);
     }
   },
   data() {
     return {
       debouncedObservationScrollEnd: null,
       isModalOpened: false,
-      isIE: false
+      isIE: false,
+      isSearching: false,
+      search: "",
+      searchList: []
     };
   },
   async beforeMount() {
@@ -131,6 +200,24 @@ aside {
 
 section {
   width: 865px;
+}
+
+.search {
+  all: unset;
+  box-sizing: border-box;
+  margin-top: 20px;
+  width: 100%;
+  padding: 10px 14px;
+  border-radius: 5px;
+  background-color: #e9ecee;
+}
+
+.search-list-count {
+  margin-top: 20px;
+
+  & span {
+    color: #00c854;
+  }
 }
 
 .sorting-controls {

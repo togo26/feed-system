@@ -6,15 +6,18 @@ const requestOptions = {
 };
 
 export const fetchFeedList = async options => {
-  const { page, orderBy, categories } = options;
-  const selectedCategories = categories.map(category => {
-    if (category.isChecked) return `&category%5B%5D=${category.id}`;
-    else return "";
-  });
+  const { page, orderBy, categories, limit } = options;
+  let selectedCategories = [];
+  if (categories) {
+    selectedCategories = categories.map(category => {
+      if (category.isChecked) return `&category%5B%5D=${category.id}`;
+      else return "";
+    });
+  }
   const result = await fetch(
-    `${baseUrl}/list?page=${page}
+    `${baseUrl}/list?page=${page || 1}
     &ord=${orderBy === "ascending" ? "asc" : "desc"}
-    &limit=10${selectedCategories.join("")}`,
+    &limit=${limit || 10}${selectedCategories.join("")}`,
     requestOptions
   );
   return result.json();

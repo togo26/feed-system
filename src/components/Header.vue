@@ -20,7 +20,7 @@ export default {
   data() {
     return {
       currentPath: "/",
-      description: "‘[제출일] 이름’ 을 작성해주세요:)"
+      description: "[2020.02.03] 신현창"
     };
   }
 };

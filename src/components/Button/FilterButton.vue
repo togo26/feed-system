@@ -19,14 +19,14 @@ button {
   width: 48px;
   height: 24px;
   border-radius: 3px;
-  border: solid 1px #e1e4e7;
-  background-color: #ffffff;
+  border: solid 1px $gray100;
+  background-color: $white;
   font-size: 13px;
   text-align: center;
-  color: #adb5bd;
+  color: $gray300;
 
   &:active {
-    background-color: #eeeeee;
+    background-color: $gray100;
   }
 }
 </style>

@@ -30,7 +30,7 @@ export default {
 }
 
 .overlay {
-  background-color: #000;
+  background-color: $black;
   opacity: 0.7;
 }
 
@@ -43,7 +43,7 @@ export default {
   padding: 20px;
   position: relative;
   top: calc(50% - 300px / 2);
-  background-color: #fff;
+  background-color: $white;
   z-index: 50;
   opacity: 1;
 }

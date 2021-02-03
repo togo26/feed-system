@@ -41,7 +41,7 @@ export default {
   display: flex;
   justify-content: space-between;
   padding: 20px 0px 12px 0px;
-  border-bottom: 1px solid #e1e4e7;
+  border-bottom: 1px solid $gray100;
   font-size: 13px;
 }
 
@@ -52,8 +52,8 @@ export default {
   & span:first-child {
     padding-right: 12px;
     margin-right: 10px;
-    border-right: 1px solid #e1e4e7;
-    color: #00c854;
+    border-right: 1px solid $gray100;
+    color: $green;
   }
 }
 
@@ -79,7 +79,7 @@ p {
   display: -webkit-box;
   -webkit-line-clamp: 1;
   -webkit-box-orient: vertical;
-  color: #495057;
+  color: $gray400;
   line-height: 24px;
   transition: height 0.3s ease;
 }

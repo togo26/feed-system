@@ -16,6 +16,6 @@ export default {};
   margin-bottom: 30px;
   padding: 0px 30px;
   border-radius: 5px;
-  border: 1px solid #e1e4e7;
+  border: 1px solid $gray100;
 }
 </style>

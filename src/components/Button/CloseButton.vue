@@ -24,7 +24,7 @@ export default {};
     content: "";
     height: 22px;
     width: 3px;
-    background-color: #adb5bd;
+    background-color: $gray300;
   }
 
   &:before {

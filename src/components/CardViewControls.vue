@@ -29,10 +29,10 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss">
 .toggle-card-view-mode {
   cursor: pointer;
-  color: #bbb;
+  color: $gray300;
   font-size: 14px;
   text-decoration: underline;
   margin-right: 14px;

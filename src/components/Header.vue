@@ -35,7 +35,7 @@ header {
   top: 0;
   width: 100%;
   height: 70px;
-  background-color: #fff;
+  background-color: $white;
   box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.07);
   z-index: 10;
 }

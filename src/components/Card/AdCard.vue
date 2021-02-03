@@ -34,7 +34,7 @@ export default {
 
   & span {
     font-size: 13px;
-    color: #adb5bd;
+    color: $gray300;
   }
 }
 
@@ -46,7 +46,7 @@ export default {
     height: 180px;
     margin-right: 30px;
     object-fit: cover;
-    background-color: #e1e4e7;
+    background-color: $gray100;
   }
 
   & .ad-contents__text-box {

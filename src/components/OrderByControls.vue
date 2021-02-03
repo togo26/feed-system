@@ -78,18 +78,18 @@ input[type="radio"] {
 }
 
 input[type="radio"] {
-  background-color: #e1e4e7;
+  background-color: $gray100;
 
   & ~ label {
-    color: #adb5bd;
+    color: $gray300;
   }
 }
 
 input[type="radio"]:checked {
-  background-color: #00c854;
+  background-color: $green;
 
   & ~ label {
-    color: #495057;
+    color: $gray400;
   }
 }
 </style>

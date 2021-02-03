@@ -15,11 +15,11 @@ button {
   width: 235px;
   height: 60px;
   border-radius: 5px;
-  background-color: #00c854;
+  background-color: $green;
   text-align: center;
   font-size: 22px;
   font-weight: 600;
-  color: #fff;
+  color: $white;
 
   &:active {
     background-color: #00b84d;

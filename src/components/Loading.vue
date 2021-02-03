@@ -23,7 +23,7 @@ div {
   height: 24px;
   border-radius: 12px;
   margin: 6px;
-  background-color: #00c854;
+  background-color: $green;
   opacity: 0.8;
 }
 
@@ -32,7 +32,7 @@ div {
 }
 
 .box:last-child {
-  background-color: #000;
+  background-color: $black;
   animation: 1.6s slideLeft infinite;
 }
 

@@ -36,9 +36,9 @@ export default {
   justify-content: space-between;
   padding: 0px 0px 12px 0px;
   margin-bottom: 20px;
-  border-bottom: 1px solid #e1e4e7;
+  border-bottom: 1px solid $gray100;
   font-size: 13px;
-  color: #7e848a;
+  color: $gray300;
 }
 
 h3 {
@@ -62,7 +62,7 @@ p {
   overflow: hidden;
   text-overflow: ellipsis;
   line-height: 26px;
-  color: #495057;
+  color: $gray400;
   margin-bottom: 14px;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -74,7 +74,7 @@ p {
 
 .created-at {
   font-size: 13px;
-  color: #adb5bd;
+  color: $gray300;
 }
 
 @media (max-width: 768px) {
@@ -82,8 +82,8 @@ p {
     border: none;
     border-radius: 0;
     padding: 26px 0px;
-    border-top: 1px solid #e1e4e7;
-    border-bottom: 1px solid #e1e4e7;
+    border-top: 1px solid $gray100;
+    border-bottom: 1px solid $gray100;
   }
 }
 </style>

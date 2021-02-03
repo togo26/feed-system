@@ -27,7 +27,7 @@ export default {
 .wrapper {
   height: 210px;
   padding: 25px 30px;
-  border: solid 1px #00c854;
+  border: solid 1px $green;
 }
 
 h3 {
@@ -51,7 +51,7 @@ p {
   overflow: hidden;
   text-overflow: ellipsis;
   line-height: 26px;
-  color: #495057;
+  color: $gray400;
   margin-bottom: 14px;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -63,7 +63,7 @@ p {
 
 .created-at {
   font-size: 13px;
-  color: #adb5bd;
+  color: $gray300;
 }
 
 @media (max-width: 768px) {
@@ -71,8 +71,8 @@ p {
     border: none;
     border-radius: 0;
     padding: 25px 0;
-    border-top: 1px solid #00c854;
-    border-bottom: 1px solid #00c854;
+    border-top: 1px solid $green;
+    border-bottom: 1px solid $green;
   }
 }
 </style>

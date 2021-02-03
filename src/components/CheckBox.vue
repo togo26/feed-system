@@ -50,8 +50,8 @@ span {
   width: 20px;
   height: 20px;
   text-align: center;
-  background: #fff;
-  border: 1px solid #e1e4e7;
+  background: $white;
+  border: 1px solid $gray100;
   box-sizing: border-box;
 }
 
@@ -62,7 +62,7 @@ span {
   top: -2px;
   width: 20px;
   height: 20px;
-  background-color: #00c854;
+  background-color: $green;
   z-index: 4;
 }
 </style>

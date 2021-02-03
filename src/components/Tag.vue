@@ -15,7 +15,7 @@ span {
   padding: 2px 10px;
   border-radius: 20px;
   margin-right: 6px;
-  color: #00c854;
-  border: 1px solid #00c854;
+  color: $green;
+  border: 1px solid $green;
 }
 </style>

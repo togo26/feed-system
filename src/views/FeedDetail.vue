@@ -64,7 +64,7 @@ export default {
   }
 
   & p:last-child {
-    color: #00c854;
+    color: $green;
   }
 }
 

@@ -116,14 +116,14 @@ export default {
   cursor: pointer;
   position: absolute;
   bottom: 20px;
-  color: #bbb;
   font-size: 14px;
   text-decoration: underline;
+  color: $gray300;
 }
 
 .message {
   font-size: 12px;
-  color: #eb4d4b;
+  color: $red;
   margin-top: -12px;
 }
 

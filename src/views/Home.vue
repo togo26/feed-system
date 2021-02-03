@@ -219,14 +219,14 @@ section {
   width: 100%;
   padding: 10px 14px;
   border-radius: 5px;
-  background-color: #e9ecee;
+  background-color: $gray200;
 }
 
 .search-list-count {
   margin-top: 20px;
 
   & span {
-    color: #00c854;
+    color: $green;
   }
 }
 
@@ -278,7 +278,7 @@ section {
     height: 56px;
     margin: 0;
     padding: 10px 15px 10px 15px;
-    border-bottom: 1px solid #e1e4e7;
+    border-bottom: 1px solid $gray100;
   }
 
   .filter-tags {
@@ -286,7 +286,7 @@ section {
     height: 56px;
     padding: 0px 10px;
     margin: 0;
-    border-bottom: 1px solid #e1e4e7;
+    border-bottom: 1px solid $gray100;
   }
 }
 </style>

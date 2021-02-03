@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <Header />
+    <custom-header />
     <router-view />
   </div>
 </template>
@@ -10,7 +10,7 @@ import Header from "@/components/Header.vue";
 
 export default {
   components: {
-    Header
+    "custom-header": Header
   }
 };
 </script>

@@ -16,7 +16,8 @@ export const mutation = {
   RESET_ORDER_BY: "resetOrderBy",
   ADD_CATEGORIES: "addCategories",
   UPDATE_CATEGORIES: "updateCategories",
-  UPDATE_AD_REDUCTION_MODE: "updateAdReductionMode"
+  UPDATE_AD_REDUCTION_MODE: "updateAdReductionMode",
+  UPDATE_EXPANDED_CARD_VIEW_MODE: "updateExpandedCardViewMode"
 };
 
 export const state = {
@@ -27,5 +28,6 @@ export const state = {
   LAST_PAGE_NUMBER: "lastPageNumber",
   CURRENT_PAGE_NUMBER: "currentPageNumber",
   ORDER_BY: "orderBy",
-  IS_AD_REDUCTION_MODE: "isAdReductionMode"
+  IS_AD_REDUCTION_MODE: "isAdReductionMode",
+  IS_EXPANDED_CARD_VIEW_MODE: "isExpandedCardViewMode"
 };

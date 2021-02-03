@@ -23,7 +23,10 @@
       <section>
         <div class="sorting-controls">
           <order-by-controls :resetSearch="resetSearch" />
-          <filter-button text="필터" @handle-click="isModalOpened = true" />
+          <div>
+            <card-view-controls :resetSearch="resetSearch" />
+            <filter-button text="필터" @handle-click="isModalOpened = true" />
+          </div>
         </div>
         <div class="filter-tags">
           <tag
@@ -66,6 +69,7 @@ import ModalView from "@/components/ModalView.vue";
 import CategoryFilter from "@/components/CategoryFilter.vue";
 import Tag from "@/components/Tag.vue";
 import Loading from "@/components/Loading.vue";
+import CardViewControls from "@/components/CardViewControls.vue";
 import { fetchFeedList } from "@/utils/api.js";
 import { debounce } from "@/utils/debounce.js";
 import { observeScrollEnd } from "@/utils/observeScrollEnd.js";
@@ -79,6 +83,7 @@ export default {
     FeedWithAdCardList,
     FeedCard,
     OrderByControls,
+    CardViewControls,
     ModalView,
     CategoryFilter,
     Tag,
@@ -232,6 +237,11 @@ section {
   width: 100%;
   height: 24px;
   margin-bottom: 11px;
+
+  & > div {
+    display: flex;
+    align-items: center;
+  }
 }
 
 .filter-tags {

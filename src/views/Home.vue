@@ -14,7 +14,7 @@
           type="text"
           placeholder="Search"
           v-model="search"
-          @change="searchFeedsWithKeyword"
+          @keydown="handleEnterKey"
         />
         <p class="search-list-count" v-show="searchList.length">
           검색 결과 <span>{{ searchList.length }}</span>
@@ -128,7 +128,11 @@ export default {
       this.searchList = [];
       this.isSearching = false;
     },
-    async searchFeedsWithKeyword({ target: { value: keyword } }) {
+    handleEnterKey({ code, target: { value } }) {
+      if (code !== "Enter") return;
+      this.searchFeedsWithKeyword(value);
+    },
+    async searchFeedsWithKeyword(keyword) {
       if (!keyword) return;
 
       const regex = new RegExp(keyword, "gm");

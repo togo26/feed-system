@@ -27,9 +27,9 @@ export const fetchFeedList = async options => {
 };
 
 export const fetchAdBannerList = async options => {
-  const { page } = options;
+  const { page, limit } = options;
   const result = await fetch(
-    `${baseUrl}/ads?page=${page}&limit=4`,
+    `${baseUrl}/ads?page=${page}&limit=${limit}`,
     requestOptions
   );
 

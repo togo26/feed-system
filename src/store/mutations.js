@@ -75,5 +75,8 @@ export default {
   },
   updateAdReductionMode(state, payload) {
     state.isAdReductionMode = payload;
+  },
+  updateExpandedCardViewMode(state) {
+    state.isExpandedCardViewMode = !state.isExpandedCardViewMode;
   }
 };

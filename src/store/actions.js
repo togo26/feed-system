@@ -10,8 +10,10 @@ export default {
     const options = {
       orderBy: state.orderBy,
       page: state.currentPageNumber,
-      categories: state.categories
+      categories: state.categories,
+      limit: state.isExpandedCardViewMode ? 20 : 10
     };
+
     try {
       const result = await fetchFeedList(options);
       commit(mutation.SET_LAST_PAGE_NUMBER, {
@@ -23,7 +25,11 @@ export default {
     }
   },
   async addAdBannerList({ commit, state }) {
-    const options = { page: state.currentPageNumber };
+    const options = {
+      page: state.currentPageNumber,
+      limit: state.isExpandedCardViewMode ? 8 : 4
+    };
+
     try {
       const result = await fetchAdBannerList(options);
       commit(mutation.ADD_AD_BANNER_LIST, { list: result.data || [] });

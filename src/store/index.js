@@ -14,7 +14,8 @@ const state = {
   lastPageNumber: 0,
   currentPageNumber: 1,
   orderBy: "ascending",
-  isAdReductionMode: false
+  isAdReductionMode: false,
+  isExpandedCardViewMode: false
 };
 
 export default new Vuex.Store({

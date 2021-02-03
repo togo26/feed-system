@@ -131,8 +131,6 @@ export default {
     async searchFeedsWithKeyword({ target: { value: keyword } }) {
       if (!keyword) return;
 
-      this.isSearching = true;
-
       const regex = new RegExp(keyword, "gm");
       const result = await fetchFeedList({
         limit: 100,

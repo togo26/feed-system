@@ -10,7 +10,7 @@
       />
     </div>
     <p class="message" v-show="message">{{ message }}</p>
-    <Button @handle-click="handleSaveClick">저장하기</Button>
+    <custom-button @handle-click="handleSaveClick">저장하기</custom-button>
     <div class="toggle-ad-reduction-mode" @click="toggleAdReductionMode">
       {{ currentAdReductionMode ? "광고 더보기" : "광고 줄이기" }}
     </div>
@@ -26,7 +26,7 @@ import { state, mutation, action } from "@/constants/index.js";
 export default {
   props: ["close-modal", "resetSearch"],
   components: {
-    Button,
+    "custom-button": Button,
     CheckBox
   },
   computed: {

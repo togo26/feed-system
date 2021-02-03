@@ -1,7 +1,7 @@
 <template>
-  <click-button @handle-click="$emit('handle-click')">
+  <custom-button @handle-click="$emit('handle-click')">
     <slot>필터</slot>
-  </click-button>
+  </custom-button>
 </template>
 
 <script>
@@ -9,7 +9,7 @@ import Button from "@/components/Button/Button.vue";
 
 export default {
   components: {
-    "click-button": Button
+    "custom-button": Button
   }
 };
 </script>

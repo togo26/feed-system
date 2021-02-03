@@ -8,7 +8,7 @@
     </modal-view>
     <div class="wrapper">
       <aside>
-        <Button>로그인</Button>
+        <custom-button>로그인</custom-button>
         <input
           class="search"
           type="text"
@@ -74,7 +74,7 @@ import { state, mutation, action } from "@/constants/index.js";
 
 export default {
   components: {
-    Button,
+    "custom-button": Button,
     FilterButton,
     FeedWithAdCardList,
     FeedCard,

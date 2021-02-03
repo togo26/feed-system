@@ -21,7 +21,7 @@
         </p>
       </aside>
       <section>
-        <div class="sorting-controls">
+        <div class="view-controls">
           <order-by-controls :resetSearch="resetSearch" />
           <div>
             <card-view-controls :resetSearch="resetSearch" />
@@ -230,7 +230,7 @@ section {
   }
 }
 
-.sorting-controls {
+.view-controls {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -272,7 +272,7 @@ section {
     width: 100%;
   }
 
-  .sorting-controls {
+  .view-controls {
     box-sizing: border-box;
     width: 100%;
     height: 56px;
